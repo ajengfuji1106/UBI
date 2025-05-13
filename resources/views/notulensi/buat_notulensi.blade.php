@@ -1,0 +1,63 @@
+@extends($layout)
+
+@section('content')
+<div class="container mt-5">
+    <div class="bg-white rounded-3 p-4" style="margin-left: 260px; margin-top: 75px; height: auto; ">
+            <div class="card p-4 shadow-lg border-0">
+
+            
+                <div class="card-body">
+                    <h2 class="h5 mb-4 fw-bold">Tambah Notulensi</h2>
+
+                    <form action="{{ route('notulensi.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id_rapat" value="{{ $id_rapat ?? '' }}">
+
+                        {{-- Input Judul Notulensi --}}
+                        <div class="mb-3">
+                            <label for="judul_notulensi" class="form-label">Judul Notulensi</label>
+                            <input 
+                                type="text" 
+                                id="judul_notulensi" 
+                                name="judul_notulensi" 
+                                class="form-control" 
+                                placeholder="Masukkan Judul Notulensi" 
+                                required
+                            >
+                        </div>
+
+                        {{-- Input TinyMCE --}}
+                        <div class="mb-3">
+                            <label for="editor" class="form-label">Notes</label>
+                            <textarea 
+                                id="editor" 
+                                name="konten_notulensi" 
+                                class="form-control"
+                            ></textarea>
+                        </div>
+
+                        {{-- Tombol Aksi --}}
+                        <div class="d-flex justify-content-end gap-2">
+                            <a href="{{ route('meeting.detail', ['id' => $id_rapat]) }}" class="btn btn-danger">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            
+        </div>
+    </div>
+</div>
+
+{{-- TinyMCE --}}
+<script src="https://cdn.tiny.cloud/1/vweiq0f3ncoj00j6n3jcd0eallkmqx9pwj6oqwfn42cwdpw6/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+        selector: '#editor',
+        api_key: 'vweiq0f3ncoj00j6n3jcd0eallkmqx9pwj6oqwfn42cwdpw6',
+        height: 300,
+        menubar: false,
+        plugins: 'advlist autolink lists link charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table help',
+        toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright | bullist numlist outdent indent | removeformat | help'
+    });
+</script>
+@endsection
