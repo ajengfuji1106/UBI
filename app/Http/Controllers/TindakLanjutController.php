@@ -189,6 +189,11 @@ public function uploadLampiran(Request $request, $id_tindaklanjut)
 
     $tindaklanjut = TindakLanjut::findOrFail($id_tindaklanjut);
 
+    $bolehUpload = $tindaklanjut->hasil->where('id_user', auth()->id())->isNotEmpty();
+if (! $bolehUpload) {
+    abort(403, 'Anda tidak memiliki tugas untuk mengunggah lampiran ini.');
+}
+
     $file = $request->file('file_path');
 
     $path = $request->file('file_path')->store('lampiran', 'public');

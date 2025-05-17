@@ -10,6 +10,8 @@ use App\Http\Controllers\NotulensiController;
 use App\Http\Controllers\DokumentasiController;
 use App\Http\Controllers\TindakLanjutController;
 use App\Http\Controllers\CatatanRevisiController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\User\DashboardController;
 
 
 Route::get('/', function () {
@@ -17,13 +19,12 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return view('partials.admin.Dashboard');
-    })->name('admin.dashboard');
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
+        ->name('admin.dashboard');
 
-    Route::get('/user/dashboard', function () {
-        return view('partials.user.Dashboard');
-    })->name('user.dashboard');
+    Route::get('/user/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('user.dashboard');
 });
 
 
@@ -98,8 +99,7 @@ Route::get('/rekap-kehadiran/{id_rapat}', [PesertaController::class, 'rekap'])->
 // Route::get('/rekap-kehadiran', [PesertaController::class, 'rekap'])->name('rekap.kehadiran');
 Route::get('/rekap-kehadiran/download', [PesertaController::class, 'downloadRekap'])->name('rekap.download');
 Route::post('/peserta/kehadiran/{id_peserta}', [PesertaController::class, 'konfirmasiKehadiran'])->name('peserta.konfirmasi');
-
-
+Route::put('/peserta/{id_peserta}/update-status/{status}', [PesertaController::class, 'updateStatus'])->name('peserta.updateStatus');
 
 
 

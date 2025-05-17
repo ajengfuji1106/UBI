@@ -62,19 +62,20 @@
                                     <a href="{{ asset('storage/' . $hasil->file_path) }}" target="_blank">
                                         {{ $hasil->nama_file_asli ?? 'File Lampiran' }}
                                     </a>
+                                    <div class="small text-muted"> diunggah pada: {{ $hasil->created_at->timezone('Asia/Jakarta')->format('d M Y H:i') }} </div>
                                 </td>
                                 <td>{{ $hasil->user->name ?? 'User tidak ditemukan' }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalRevisi-{{ $user->id }}">
+                                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalRevisi-{{ $hasil->id_hasiltindaklanjut }}">
                                         Catatan Revisi
                                     </button>
                                 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="modalRevisi-{{ $user->id }}" tabindex="-1">
+                                    <div class="modal fade" id="modalRevisi-{{ $hasil->id_hasiltindaklanjut }}" tabindex="-1">
                                         <div class="modal-dialog">
                                             <form action="{{ route('catatan-revisi.store') }}" method="POST">
                                                 @csrf
-                                                <input type="hidden" name="id_tindak_lanjut_user" value="{{ $user->tindaklanjutUser->id }}">
+                                                <input type="hidden" name="id_hasiltindaklanjut" value="{{ $hasil->id_hasiltindaklanjut }}">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title">Catatan Revisi</h5>
@@ -82,14 +83,18 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         @php
-                                                            $revisiTerakhir = $user->tindaklanjutUser->catatanRevisi->last();
+                                                            $revisiTerakhir = $hasil->catatanRevisi->last();
                                                         @endphp
 
                                                         @if ($revisiTerakhir)
                                                             <label class="form-label">Catatan Sebelumnya:</label>
                                                             <textarea class="form-control mb-3" rows="4" readonly>{{ $revisiTerakhir->catatanrevisi }}</textarea>
+                                                            <div class="text-muted small">
+                                                                Diberikan oleh: {{ $revisiTerakhir->user->name ?? '-' }} <br>
+                                                                Pada: {{ $revisiTerakhir->created_at->timezone('Asia/Jakarta')->format('d M Y H:i') }}
+                                                            </div>
                                                         @endif
-                                                    
+                                                    <br>
                                                         <label class="form-label">Tulis Catatan Baru:</label>
                                                         <textarea name="catatanrevisi" class="form-control" rows="5" placeholder="Tulis catatan revisi..."></textarea>
                                                     </div>

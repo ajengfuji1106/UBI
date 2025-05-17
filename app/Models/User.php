@@ -67,4 +67,11 @@ public function tindaklanjutUser()
     return $this->hasOne(TindakLanjutUser::class, 'id_user');
 }
 
+public function rapats()
+{
+    return $this->belongsToMany(Rapat::class, 'pesertas', 'id_user', 'id_rapat')
+                ->withPivot('status_kehadiran', 'role_peserta', 'bukti_kehadiran');
+}
+
+
 }

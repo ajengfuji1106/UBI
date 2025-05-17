@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\catatanRevisi;
+use Illuminate\Support\Facades\Auth;
 
 class CatatanRevisiController extends Controller
 {
@@ -11,12 +12,13 @@ class CatatanRevisiController extends Controller
 {
     $request->validate([
         'catatanrevisi' => 'required|string',
-        'id_tindak_lanjut_user' => 'required|exists:tindak_lanjut_user,id'
+        'id_hasiltindaklanjut' => 'required|exists:hasil_tindak_lanjuts,id_hasiltindaklanjut',
     ]);
 
     catatanRevisi::create([
-        'id_tindak_lanjut_user' => $request->id_tindak_lanjut_user,
-        'catatanrevisi' => $request->catatanrevisi
+        'id_hasiltindaklanjut' => $request->id_hasiltindaklanjut,
+        'catatanrevisi' => $request->catatanrevisi,
+        'id_user' => Auth::id(),
     ]);
 
     return back()->with('success', 'Catatan revisi berhasil disimpan.');

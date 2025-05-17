@@ -190,7 +190,11 @@ class UndanganController extends Controller
 
     public function kelolaRapatUser()
     {
-    $rapats = Rapat::paginate(10); 
+         $user = Auth::user(); // dapetin user yang login
+
+    // ambil rapat yang user ini ikuti dari tabel pesertas
+    $rapats = $user->rapats()->paginate(10); 
+    // $rapats = Rapat::paginate(10); 
     return view('partials.user.kelola_rapat', compact('rapats'));
     }
 
@@ -210,18 +214,17 @@ class UndanganController extends Controller
         $peserta = Peserta::where('id_rapat', $id)
         ->where('id_user', Auth::id())
         ->first();
-        // dd([
-            // 'id_peserta' => $peserta->id_peserta,
-            // 'id_user' => $peserta->id_user,
-            // 'id_rapat' => $peserta->id_rapat,
-        // ]);
 
+        $pesertaUser = $rapat->peserta->where('id_user', auth()->id())->first();
 
+        if (!$peserta) {
+        return redirect()->route('user.rapat')->with('error', 'Kamu tidak memiliki akses ke rapat ini.');
+    }
         $punyaakses = $peserta && in_array($peserta->role_peserta, ['Moderator', 'PIC']);
         $jikaPIC = $peserta && $peserta->role_peserta === 'PIC';
 
         $pesertaUserIds = Peserta::where('id_rapat', $id)->pluck('id_user')->toArray();
         $users = User::whereNotIn('id', $pesertaUserIds)->get();
-        return view('partials.user.meeting_detail', compact('users', 'rapat', 'undangan', 'peserta', 'totalPeserta', 'user','punyaakses', 'jikaPIC'))->with('id_rapat', $id);
+        return view('partials.user.meeting_detail', compact('users', 'rapat', 'undangan', 'peserta', 'totalPeserta', 'user','punyaakses', 'jikaPIC', 'pesertaUser'))->with('id_rapat', $id);
     }
 }

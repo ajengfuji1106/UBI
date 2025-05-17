@@ -54,69 +54,79 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <form action="{{ route('upload.lampiran', ['id_tindaklanjut' => $tindaklanjut->id_tindaklanjut]) }}" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    <input type="file" name="file_path" id="lampiranFile" class="form-control d-none" onchange="this.form.submit()">
-                                
-                                    <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('lampiranFile').click()">Upload Lampiran</button>
-                                
-                                    {{-- Tampilkan file yang sudah diupload --}}
-                                    @if ($tindaklanjut->hasil->isNotEmpty())
-                                        <div class="mt-2">
-                                            @foreach ($tindaklanjut->hasil as $hasil)
-                                                <div class="mb-1">
-                                                    <a href="{{ asset('storage/' . $hasil->file_path) }}" target="_blank">
-                                                        📄 {{ $hasil->nama_file_asli ?? 'Lampiran' }}
-                                                    </a>
-                                                    <div class="small text-muted">oleh: {{ $hasil->user->name ?? '-' }}</div>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    @else
-                                        <div class="mt-2 text-muted">Belum ada file yang diunggah</div>
-                                    @endif
-                                </form>
-                            </td>
-                            <td>
-                                <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalLihatRevisi-{{ $user->id }}">
-                                    Lihat di sini
-                                </a>
+                    @php
+                        $bolehUpload = $tindaklanjut->hasil->where('id_user', auth()->id())->isNotEmpty();
+                    @endphp
+                        @if ($bolehUpload)
+                    <tr>
+                        <td colspan="3">
+                            <form action="{{ route('upload.lampiran', ['id_tindaklanjut' => $tindaklanjut->id_tindaklanjut]) }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <input type="file" name="file_path" id="lampiranFile" class="form-control d-none" onchange="this.form.submit()">
                             
-                                <!-- Modal -->
-                                <div class="modal fade" id="modalLihatRevisi-{{ $user->id }}" tabindex="-1">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Catatan Revisi</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                @php
-                                                    $revisi = $user->tindaklanjutUser->catatanRevisi->last(); // bisa diganti ->first()
-                                                @endphp
-
-                                                @if ($revisi)
-                                                    <textarea class="form-control" rows="5" readonly>{{ $revisi->catatanrevisi }}</textarea>
-                                                @else
-                                                    <p class="text-muted">Belum ada catatan revisi.</p>
-                                                @endif
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('lampiranFile').click()">Upload Lampiran</button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endif
+                
+                    @if ($tindaklanjut->hasil->isNotEmpty())
+                        @foreach ($tindaklanjut->hasil as $hasil)
+                            <tr>
+                                <td>
+                                    <a href="{{ asset('storage/' . $hasil->file_path) }}" target="_blank">
+                                        📄 {{ $hasil->nama_file_asli ?? 'Lampiran' }}
+                                    </a>
+                                    <div class="small text-muted">
+                                        oleh: {{ $hasil->user->name ?? '-' }} |
+                                        diunggah pada: {{ $hasil->created_at->timezone('Asia/Jakarta')->format('d M Y H:i') }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalLihatRevisi-{{ $hasil->id_hasiltindaklanjut }}">
+                                        Lihat di sini
+                                    </a>
+                                
+                                    <!-- Modal Revisi -->
+                                    <div class="modal fade" id="modalLihatRevisi-{{ $hasil->id_hasiltindaklanjut }}" tabindex="-1">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Catatan Revisi</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    @php
+                                                        $revisi = $hasil->catatanRevisi->last();
+                                                    @endphp
+                                                    @if ($revisi)
+                                                        <textarea class="form-control" rows="5" readonly>{{ $revisi->catatanrevisi }}</textarea>
+                                                        <div class="small text-muted">
+                                                            Diberikan oleh: {{ $revisi->user->name ?? '-' }}<br>
+                                                            Pada: {{ $revisi->created_at->timezone('Asia/Jakarta')->format('d M Y H:i') }}
+                                                        </div>
+                                                    @else
+                                                        <p class="text-muted">Belum ada catatan revisi.</p>
+                                                    @endif
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td>
-                                @if($tindaklanjut->hasil->isNotEmpty())
-                                    <span class="text-muted">{{ $tindaklanjut->hasil->first()->status_tugas }}</span>
-                                @endif
-                            </td>
+                                </td>
+                                <td>
+                                    <span class="text-muted">{{ $hasil->status_tugas ?? '-' }}</span>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <td colspan="3" class="text-muted">Belum ada file yang diunggah</td>
                         </tr>
-                    </tbody>
+                    @endif
+                </tbody>
                 </table>
             </div>
         </div>

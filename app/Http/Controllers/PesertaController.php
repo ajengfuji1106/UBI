@@ -50,12 +50,14 @@ public function store(Request $request)
     }
 
     // Simpan data peserta
-    Peserta::create([
+    $peserta = Peserta::create([
         'id_rapat' => $request->id_rapat,
         'id_user' => $request->id_user,
         'role_peserta' => $request->role_peserta,
         'status_kehadiran' => null,  // Status kehadiran bisa kosong atau diatur nanti
     ]);
+
+
 
     // Redirect setelah sukses
     return redirect()->route('meeting.detail', ['id' => $request->id_rapat])
@@ -169,4 +171,13 @@ public function konfirmasiKehadiran(Request $request, $id_peserta)
 
     return back()->with('success', 'Kehadiran berhasil dikonfirmasi!');
 }
+    public function updateStatus($id_peserta, $status)
+    {
+        $peserta = Peserta::findOrFail($id_peserta);
+        $peserta->status_kehadiran = $status;
+        $peserta->save();
+    
+        return redirect()->back()->with('success', 'Status kehadiran diperbarui.');
+    }
+
 }

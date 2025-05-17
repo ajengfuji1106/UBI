@@ -24,4 +24,14 @@ class hasilTindakLanjut extends Model
     {
         return $this->belongsTo(User::class, 'id_user');
     }
+    public function catatanRevisi()
+{
+    return $this->hasMany(CatatanRevisi::class, 'id_hasiltindaklanjut', 'id_hasiltindaklanjut');
+}
+
+    // public function catatanRevisi()
+    // {
+        // return $this->hasMany(CatatanRevisi::class, 'id_tindak_lanjut_user', 'id_hasiltindaklanjut');
+    // }
+
 }

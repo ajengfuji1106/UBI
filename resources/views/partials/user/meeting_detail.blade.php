@@ -160,16 +160,16 @@
                 {{-- Debug  --}}
                 {{-- <p><strong>Nama:</strong> {{ auth()->user()->name }}</p> --}}
                 {{-- <p><strong>ID User:</strong> {{ auth()->user()->id }}</p> --}}
-                {{-- <p><strong>ID Peserta:</strong> {{ $peserta->id_peserta }}</p> --}}
-                <form action="{{ route('peserta.konfirmasi', $peserta->id_peserta) }}" method="POST" enctype="multipart/form-data">
+                {{-- <p><strong>ID Peserta:</strong> {{ $pesertaUser->id_peserta }}</p> --}}
+                <form action="{{ route('peserta.konfirmasi', $pesertaUser->id_peserta) }}" method="POST" enctype="multipart/form-data">
 
                     @csrf
                     <div class="mb-3">
                         <label for="buktiKehadiran" class="form-label">Bukti Kehadiran</label>
-                         @if ($peserta->bukti_kehadiran)
+                         @if ($pesertaUser->bukti_kehadiran)
                             {{-- Preview bukti kehadiran yang sudah diupload --}}
                             <div>
-                                <img src="{{ asset('storage/' . $peserta->bukti_kehadiran) }}" alt="Bukti Kehadiran" style="max-width: 300px;" class="img-thumbnail">
+                                <img src="{{ asset('storage/' . $pesertaUser->bukti_kehadiran) }}" alt="Bukti Kehadiran" style="max-width: 300px;" class="img-thumbnail">
                             </div>
                         @else
                             {{-- Input file jika belum upload --}}
@@ -177,12 +177,12 @@
                         @endif
                     </div>
                     <div class="mb-3">
-                        @if (!$peserta->status_kehadiran)
+                        @if (!$pesertaUser->status_kehadiran)
                             <button type="submit" name="status_kehadiran" value="hadir" class="btn btn-success me-2">Hadir</button>
                             <button type="submit" name="status_kehadiran" value="tidak_hadir" class="btn btn-danger">Tidak Hadir</button>
                         @else
                             <div class="alert alert-info  py-1 px-2 small">
-                                Kamu sudah mengonfirmasi kehadiran sebagai <strong>{{ $peserta->status_kehadiran }}</strong>.
+                                Kamu sudah mengonfirmasi kehadiran sebagai <strong>{{ $pesertaUser->status_kehadiran }}</strong>.
                             </div>
                         @endif
                     </div>
