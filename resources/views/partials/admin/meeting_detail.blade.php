@@ -154,11 +154,22 @@
                 </div>
             </div>
 
-            <div class="form-check mt-3">
-                <input class="form-check-input" type="checkbox" id="notifUndangan">
-                <label class="form-check-label" for="notifUndangan">Kirim Notifikasi Undangan</label>
-            </div>
-            <button class="btn btn-primary mt-2 btn-sm">Send</button>
+            <form action="{{ route('peserta.kirimNotifikasi') }}" method="POST">
+    @csrf
+    <input type="hidden" name="id_rapat" value="{{ $rapat->id_rapat }}">
+    
+    <div class="form-check mt-3">
+        <input class="form-check-input" type="checkbox" id="notifUndangan" name="kirim_notif" value="1">
+        <label class="form-check-label" for="notifUndangan">Kirim Notifikasi Undangan</label>
+    </div>
+    <button class="btn btn-primary mt-2 btn-sm" type="submit">Send</button>
+</form>
+
+            {{-- <div class="form-check mt-3"> --}}
+                {{-- <input class="form-check-input" type="checkbox" id="notifUndangan"> --}}
+                {{-- <label class="form-check-label" for="notifUndangan">Kirim Notifikasi Undangan</label> --}}
+            {{-- </div> --}}
+            {{-- <button class="btn btn-primary mt-2 btn-sm">Send</button> --}}
 
             <hr>
 

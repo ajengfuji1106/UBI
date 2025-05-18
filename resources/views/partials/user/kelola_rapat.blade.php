@@ -61,10 +61,10 @@
                 <thead>
                     <tr class="text-muted text-uppercase small">
                         <th>Judul Rapat</th>
-                        <th>Tanggal</th>
-                        <th>Jam</th>
-                        <th>Lokasi</th>
-                        <th>Kategori</th>
+                        <th>Tanggal Rapat</th>
+                        <th>Jam Rapat</th>
+                        <th>Lokasi Rapat</th>
+                        <th>Kategori Rapat</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">

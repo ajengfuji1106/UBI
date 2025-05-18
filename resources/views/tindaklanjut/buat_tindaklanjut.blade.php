@@ -94,7 +94,7 @@
 
                 <!-- Notifikasi Checkbox -->
                 <div class="form-check mb-4">
-                    <input class="form-check-input" type="checkbox" id="notifikasiCheck">
+                    <input class="form-check-input" type="checkbox" name="kirim_notifikasi" id="notifikasiCheck">
                     <label class="form-check-label fw-semibold text-dark" for="notifikasiCheck">
                         Kirim Notifikasi Tindak Lanjut
                     </label>

@@ -92,6 +92,9 @@ Route::delete('peserta/{id_peserta}', [PesertaController::class, 'destroy'])
     ->middleware('CheckMeetingRole:PIC')
     ->name('peserta.destroy');
 
+Route::post('/peserta/kirim-notifikasi', [PesertaController::class, 'kirimNotifUndangan'])->name('peserta.kirimNotifikasi');
+
+
 // Route::get('rapat/{id_rapat}/peserta', [PesertaController::class, 'index'])->name('peserta.index');
 
 //rekap kehadiran

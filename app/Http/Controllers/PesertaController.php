@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\FonnteService;
 use App\Models\User;
 use App\Models\Rapat;
 use App\Models\Peserta;
@@ -179,5 +180,51 @@ public function konfirmasiKehadiran(Request $request, $id_peserta)
     
         return redirect()->back()->with('success', 'Status kehadiran diperbarui.');
     }
+
+    //notif whatsapp
+    public function kirimNotifUndangan(Request $request)
+{
+    //set ke bahasa indonesia
+    \Carbon\Carbon::setLocale('id');
+
+    $idRapat = $request->input('id_rapat');
+
+    if ($request->has('kirim_notif')) {
+        $rapat = Rapat::findOrFail($idRapat);
+
+        $pesertaList = Peserta::with('user')
+            ->where('id_rapat', $idRapat)
+            ->get();
+
+        $fonnte = new FonnteService();
+
+        foreach ($pesertaList as $peserta) {
+            $user = $peserta->user;
+
+            if ($user && $user->telephone) {
+                $nama = $user->name;
+                $judul = $rapat->judul_rapat;
+                $tanggal = \Carbon\Carbon::parse($rapat->tanggal_rapat)->translatedFormat('l, d F Y');
+                $waktu = \Carbon\Carbon::parse($rapat->waktu_rapat)->format('H:i'); // format jam:menit
+                $lokasi = $rapat->lokasi_rapat;
+
+                $message = "Halo $nama,\n"
+                         . "Anda diundang untuk mengikuti rapat:\n"
+                         . "*$judul*\n"
+                         . "🗓️ $tanggal\n"
+                         . "⏰ Jam : $waktu\n"
+                         . "📍 Lokasi : $lokasi\n"
+                         . "Harap hadir tepat waktu. Terima kasih.";
+
+                // Langsung panggil nomor mentah, nanti diformat di dalam sendMessage()
+                $fonnte->sendMessage($user->telephone, $message);
+            }
+        }
+
+        return back()->with('success', 'Notifikasi berhasil dikirim ke peserta.');
+    }
+
+    return back()->with('info', 'Notifikasi tidak dikirim karena checkbox belum dicentang.');
+}
 
 }

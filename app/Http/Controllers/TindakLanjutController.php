@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\TindakLanjut;
-use App\Models\hasilTindakLanjut;
 use Illuminate\Http\Request;
+use App\Services\FonnteService;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\hasilTindakLanjut;
 use Illuminate\Support\Facades\Storage;
 
 class TindakLanjutController extends Controller
@@ -32,7 +33,7 @@ class TindakLanjutController extends Controller
         $request->validate([
             'id_rapat' => 'required|exists:rapats,id_rapat',
             'id_user' => 'required|array', // Menangani input array
-        'id_user.*' => 'exists:users,id', // Memastikan ID user valid
+            'id_user.*' => 'exists:users,id', // Memastikan ID user valid
             // 'id_user' => 'required|exists:users,id',
             'judul_tugas' => 'required|string|max:255',
             'deadline_tugas' => 'required|date',
@@ -69,6 +70,15 @@ class TindakLanjutController extends Controller
             // 'file_path' => $filePath,
         // ]);
         // }
+        // Jika checkbox dicentang, kirim notifikasi
+    if ($request->has('kirim_notifikasi')) {
+        foreach ($request->id_user as $userId) {
+            $user = \App\Models\User::find($userId);
+            if ($user && $user->telephone) {
+                $this->kirimNotifikasiWhatsapp($user->telephone, $tindakLanjut, $user->name);
+            }
+        }
+    }
 
         return redirect()->route('meeting.detail', ['id' => $request->id_rapat]) ->with('success', 'Notulensi berhasil ditambahkan!');
 
@@ -129,26 +139,33 @@ class TindakLanjutController extends Controller
     'id_user' => 'required|array',
     'id_user.*' => 'exists:users,id',
     'file_path' => 'nullable|file|mimes:pdf,doc,docx|max:2048'
-]);
+    ]);
 
-$tindaklanjut = TindakLanjut::findOrFail($id_tindaklanjut);
+    $tindaklanjut = TindakLanjut::findOrFail($id_tindaklanjut);
+    
+    $filePath = $tindaklanjut->file_path;
+    if ($request->hasFile('file_path')) {
+        $filePath = $request->file('file_path')->store('tindaklanjut_files', 'public');
+    }
+    
+    $tindaklanjut->update([
+        'judul_tugas' => $request->judul_tugas,
+        'deadline_tugas' => $request->deadline_tugas,
+        'deskripsi_tugas' => $request->deskripsi_tugas,
+        'file_path' => $filePath,
+    ]);
 
-$filePath = $tindaklanjut->file_path;
-if ($request->hasFile('file_path')) {
-    $filePath = $request->file('file_path')->store('tindaklanjut_files', 'public');
-}
+    // Update user yang ditugasi
+    $tindaklanjut->users()->sync($request->id_user);
 
-$tindaklanjut->update([
-    'judul_tugas' => $request->judul_tugas,
-    'deadline_tugas' => $request->deadline_tugas,
-    'deskripsi_tugas' => $request->deskripsi_tugas,
-    'file_path' => $filePath,
-]);
+    // Kirim notifikasi jika checkbox diaktifkan
+    if ($request->has('kirim_notifikasi')) {
+        foreach ($tindaklanjut->users as $user) {
+            $this->kirimNotifikasiWhatsapp($user->telephone, $tindaklanjut, $user->name);
+        }
+    }
 
-// Update user yang ditugasi
-$tindaklanjut->users()->sync($request->id_user);
-
-return redirect()->route('meeting.detail', ['id' => $tindaklanjut->id_rapat])->with('success', 'Tindak lanjut berhasil diperbarui.');
+    return redirect()->route('meeting.detail', ['id' => $tindaklanjut->id_rapat])->with('success', 'Tindak lanjut berhasil diperbarui.');
 
     }
 
@@ -239,6 +256,40 @@ public function destroyhasiltindaklanjut($id_hasil_tindak_lanjut)
     $hasilTindakLanjut->delete();
 
     return back()->with('success', 'Data tindak lanjut dihapus.');
+}
+
+//notif whatsapp
+public function kirimNotifikasiWhatsapp($phoneNumber, $tindakLanjut, $nama = "Peserta")
+{
+    // Asumsikan $tindakLanjut sudah ada relasi ke rapat
+    $rapat = $tindakLanjut->rapat;
+
+    // Set locale ke bahasa Indonesia
+    \Carbon\Carbon::setLocale('id');
+
+    $judulRapat = $rapat->judul_rapat;
+    $tanggal = \Carbon\Carbon::parse($rapat->tanggal_rapat)->translatedFormat('l, d F Y');
+    $waktu = \Carbon\Carbon::parse($rapat->waktu_rapat)->format('H:i');
+    $lokasi = $rapat->lokasi_rapat;
+    $deskripsi = strip_tags($tindakLanjut->deskripsi_tugas); // buang HTML
+
+    $message = "Halo $nama,\n"
+             . "Anda mendapatkan tugas tindak lanjut dari rapat:\n"
+             . "*$judulRapat*\n"
+             . "🗓 $tanggal\n"
+             . "⏰ Jam: $waktu\n"
+             . "📍 Lokasi: $lokasi\n\n"
+             . "*Judul Tugas:* {$tindakLanjut->judul_tugas}\n"
+             . "📅 Deadline: " . \Carbon\Carbon::parse($tindakLanjut->deadline_tugas)->translatedFormat('l, d F Y') . "\n"
+             . "📝 Deskripsi: $deskripsi\n\n"
+             . "Mohon dikerjakan sebelum deadline. Terima kasih.";
+
+    // Format nomor telepon agar hanya angka
+    $phoneNumber = preg_replace('/[^0-9]/', '', $phoneNumber);
+
+    // Kirim via FonnteService
+    $fonnte = new FonnteService();
+    $fonnte->sendMessage($phoneNumber, $message);
 }
 
 }
