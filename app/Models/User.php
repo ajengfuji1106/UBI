@@ -73,5 +73,4 @@ public function rapats()
                 ->withPivot('status_kehadiran', 'role_peserta', 'bukti_kehadiran');
 }
 
-
 }

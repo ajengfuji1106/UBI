@@ -15,11 +15,26 @@ class UndanganController extends Controller
 {
 
     //method untuk halaman Kelola Rapat
-    public function kelolaRapat()
+    public function kelolaRapat(Request $request)
     {
-        $rapats = Rapat::paginate(10); // mengambil semua data rapat dari tabel rapat
+        $sort = $request->query('sort', 'latest'); // default: latest
+        $kategori = $request->query('kategori_rapat');
+
+        $rapatsQuery = \App\Models\Rapat::query();
+
+        // Filter berdasarkan kategori rapat
+        if ($kategori) {
+            $rapatsQuery->where('kategori_rapat', $kategori);
+        }
+        if ($sort === 'oldest') {
+            $rapatsQuery->orderBy('tanggal_rapat', 'asc');
+        } else {
+            $rapatsQuery->orderBy('tanggal_rapat', 'desc');
+        }
+        //$rapatsQuery yang sudah difilter dan disortir
+        $rapats = $rapatsQuery->paginate(10); 
         // dd($rapats->toArray());
-        return view('partials.admin.kelola_rapat', compact('rapats'));
+        return view('partials.admin.kelola_rapat', compact('rapats', 'sort', 'kategori'));
     }
 
 
@@ -187,15 +202,32 @@ class UndanganController extends Controller
     }
 
     // METHOD SISI user
-
-    public function kelolaRapatUser()
+    public function kelolaRapatUser(Request $request)
     {
-         $user = Auth::user(); // dapetin user yang login
+        $user = Auth::user(); // dapetin user yang login
 
-    // ambil rapat yang user ini ikuti dari tabel pesertas
-    $rapats = $user->rapats()->paginate(10); 
-    // $rapats = Rapat::paginate(10); 
-    return view('partials.user.kelola_rapat', compact('rapats'));
+        $kategori = $request->query('kategori_rapat');
+        
+        $sort = $request->query('sort', 'latest'); // default: latest
+
+        // ambil rapat yang diikuti user + sorting
+        $rapatsQuery = $user->rapats();
+
+        // Filter berdasarkan kategori rapat
+        if ($kategori) {
+            $rapatsQuery->where('kategori_rapat', $kategori);
+        }
+        //Sort by
+        if ($sort === 'oldest') {
+            $rapatsQuery->orderBy('tanggal_rapat', 'asc');
+        } else {
+            $rapatsQuery->orderBy('tanggal_rapat', 'desc');
+        }
+
+        // ambil rapat yang user ini ikuti dari tabel pesertas
+        $rapats = $rapatsQuery->paginate(10); 
+        // $rapats = Rapat::paginate(10); 
+        return view('partials.user.kelola_rapat', compact('rapats', 'sort'));
     }
 
 
@@ -219,7 +251,8 @@ class UndanganController extends Controller
 
         if (!$peserta) {
         return redirect()->route('user.rapat')->with('error', 'Kamu tidak memiliki akses ke rapat ini.');
-    }
+        }
+
         $punyaakses = $peserta && in_array($peserta->role_peserta, ['Moderator', 'PIC']);
         $jikaPIC = $peserta && $peserta->role_peserta === 'PIC';
 

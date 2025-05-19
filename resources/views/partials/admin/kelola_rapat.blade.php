@@ -11,15 +11,24 @@
 
                 {{-- Filter, Search, Sort --}}
                 <div class="d-flex justify-content-between align-items-center p-3 rounded" style="background-color: #f3f8fc;">
-                    <div>
-                        <button class="btn btn-outline-secondary d-flex align-items-center gap-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L15 14.414V19a1 1 0 01-.553.894l-4 2A1 1 0 019 21v-6.586L3.293 6.707A1 1 0 013 6V4z" />
-                            </svg>
-                            Filter <span class="badge bg-primary">2</span>
-                        </button>
-                    </div>
+                        <form method="GET" class="d-flex align-items-center gap-2">
+                            <label class="me-2 mb-0">Filter :</label>
+                            <select name="kategori_rapat" class="form-select form-select-sm" style="width: 150px;" onchange="this.form.submit()">
+                                <option value="">Semua</option>
+                                <option value="Internal" {{ request('kategori_rapat') == 'Internal' ? 'selected' : '' }}>Internal</option>
+                                <option value="Eksternal" {{ request('kategori_rapat') == 'Eksternal' ? 'selected' : '' }}>Eksternal</option>
+                            </select>
+                        </form>
+
+                    {{-- <div> --}}
+                        {{-- <button class="btn btn-outline-secondary d-flex align-items-center gap-1"> --}}
+                            {{-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"> --}}
+                                {{-- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" --}}
+                                    {{-- d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L15 14.414V19a1 1 0 01-.553.894l-4 2A1 1 0 019 21v-6.586L3.293 6.707A1 1 0 013 6V4z" /> --}}
+                            {{-- </svg> --}}
+                            {{-- Filter <span class="badge bg-primary">2</span> --}}
+                        {{-- </button> --}}
+                    {{-- </div> --}}
                     <div class="position-relative w-50">
                         <input id="searchInput" type="text" class="form-control ps-5" placeholder="Search..." style="border-radius: 10px; padding-left: 2.5rem;">
                         <svg xmlns="http://www.w3.org/2000/svg"
@@ -34,9 +43,9 @@
                 
                     <div class="d-flex align-items-center">
                         <label class="me-2 mb-0">Sort by:</label>
-                        <select class="form-select form-select-sm" style="width: 100px;">
-                            <option>Oldest</option>
-                            <option>Latest</option>
+                        <select id="sortSelect" class="form-select form-select-sm" style="width: 100px;">
+                            <option value="oldest" {{ $sort == 'oldest' ? 'selected' : '' }}>Oldest</option>
+                            <option value="latest" {{ $sort == 'latest' ? 'selected' : '' }}>Latest</option>
                         </select>
                     </div>
                 </div>
@@ -189,6 +198,14 @@
                     rows[i].style.display = "none";
                 }
             }
+        });
+
+         //sort by
+        document.getElementById('sortSelect').addEventListener('change', function () {
+            const sort = this.value;
+            const url = new URL(window.location.href);
+            url.searchParams.set('sort', sort);
+            window.location.href = url.toString(); // reload halaman dengan query baru
         });
     </script>
     
