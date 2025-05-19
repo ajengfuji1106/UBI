@@ -96,7 +96,8 @@ public function show($id_dokumentasi)
     $request->validate([
         'judul_dokumentasi' => 'required|string|max:255',
         'deskripsi' => 'nullable|string',
-        'file_path.*' => 'nullable|image|mimes:jpg,jpeg,png|max:1024'
+        'file_path.*' => 'nullable|image|mimes:jpg,jpeg,png|max:1024',
+        'file_path.*' => 'image|mimes:jpg,jpeg,png|max:1024', // validasi banyak file
     ]);
 
     // Update data utama
@@ -124,8 +125,14 @@ public function show($id_dokumentasi)
         }
     }
 
-    return redirect()->route('meeting.detail', ['id' => $dokumentasi->id_rapat])
-        ->with('success', 'Dokumentasi berhasil diperbarui.');
+        if (auth()->user()->role == 'admin') {
+        return redirect()->route('meeting.detail', ['id' => $dokumentasi->id_rapat])
+            ->with('success', 'Tindak lanjut berhasil diperbarui.');
+    } else {
+        return redirect()->route('user.rapat.detail', ['id' => $dokumentasi->id_rapat])
+            ->with('success', 'Tindak lanjut berhasil diperbarui.');
+    }
+
 }
 
 // public function update(Request $request, $id_dokumentasi)
@@ -172,7 +179,14 @@ public function show($id_dokumentasi)
 
     $dokumentasi->delete();
 
-    return redirect()->route('meeting.detail', ['id' => $dokumentasi->id_rapat])->with('success', 'Dokumentasi berhasil dihapus.');
+    if (auth()->user()->role == 'admin') {
+        return redirect()->route('meeting.detail', ['id' => $dokumentasi->id_rapat])
+            ->with('success', 'Tindak lanjut berhasil diperbarui.');
+    } else {
+        return redirect()->route('user.rapat.detail', ['id' => $dokumentasi->id_rapat])
+            ->with('success', 'Tindak lanjut berhasil diperbarui.');
+    }
+
 }
 public function downloadPDF($id)
 {

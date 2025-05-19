@@ -35,12 +35,14 @@
                                 class="form-control"
                             >{{ $notulensi->konten_notulensi }}</textarea>
                         </div>
-
-                        <!-- Tombol Aksi -->
                          <!-- Tombol -->
                         <div class="d-flex gap-2">
                             <button type="submit" class="btn btn-primary">Update</button>
-                            <a href="{{ route('meeting.detail', ['id' => $notulensi->id_rapat]) }}"  class="btn btn-danger">Cancel</a>
+                            @if(auth()->user()->role == 'admin')
+                                <a href="{{ route('meeting.detail', ['id' => $notulensi->id_rapat]) }}" class="btn btn-danger">Cancel</a>
+                            @else
+                                <a href="{{ route('user.rapat.detail', ['id' => $notulensi->id_rapat]) }}" class="btn btn-danger">Cancel</a>
+                            @endif
                         </div>
                     </form>
                 </div>

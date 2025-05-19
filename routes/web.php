@@ -27,20 +27,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
     ->name('user.dashboard');
 });
 
-
 Route::middleware('auth')->group(function () {
-    //profile
+//profile
 Route::get('/profile', [UserController::class, 'profile'])->name('profile');
 Route::get('/profile/edit', [UserController::class, 'editProfile'])->name('profile.edit');
 Route::put('/profile/update', [UserController::class, 'updateProfile'])->name('profile.update');
 Route::get('/profile', [UserController::class, 'show'])->name('profile.show');
 Route::get('/profile/password', [UserController::class, 'editPassword'])->name('profile.password');
 Route::put('/profile/password/update', [UserController::class, 'updatePassword'])->name('profile.password.update');
-});
 
-require __DIR__.'/auth.php';
-
-
+//kelola pengguna
+Route::get('/kelolauser', [UserController::class, 'kelolaUser'])->name('kelolauser');
+Route::get('/tambahuser', [UserController::class, 'create'])->name('users.create');
+Route::get('/kelolauser/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+Route::put('/kelolauser/{id}/update', [UserController::class, 'update'])->name('user.update');
+Route::delete('/kelolauser/{id}', [UserController::class, 'destroy'])->name('user.delete');
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
+Route::post('/upload-foto', [UserController::class, 'uploadFoto'])->name('user.uploadFoto');
 
 // undangan
 Route::get('/tambahundangan', [UndanganController::class, 'create'])
@@ -93,8 +96,6 @@ Route::delete('peserta/{id_peserta}', [PesertaController::class, 'destroy'])
     ->name('peserta.destroy');
 
 Route::post('/peserta/kirim-notifikasi', [PesertaController::class, 'kirimNotifUndangan'])->name('peserta.kirimNotifikasi');
-
-
 // Route::get('rapat/{id_rapat}/peserta', [PesertaController::class, 'index'])->name('peserta.index');
 
 //rekap kehadiran
@@ -103,8 +104,6 @@ Route::get('/rekap-kehadiran/{id_rapat}', [PesertaController::class, 'rekap'])->
 Route::get('/rekap-kehadiran/download', [PesertaController::class, 'downloadRekap'])->name('rekap.download');
 Route::post('/peserta/kehadiran/{id_peserta}', [PesertaController::class, 'konfirmasiKehadiran'])->name('peserta.konfirmasi');
 Route::put('/peserta/{id_peserta}/update-status/{status}', [PesertaController::class, 'updateStatus'])->name('peserta.updateStatus');
-
-
 
 // NOTULENSI
 Route::get('/notulensicreate/{id_rapat}', [NotulensiController::class, 'create'])
@@ -131,7 +130,6 @@ Route::delete('/notulensi/{id_notulensi}', [NotulensiController::class, 'destroy
 
 Route::get('/notulensi/{id}/download', [NotulensiController::class, 'downloadPDF'])
     ->name('notulensi.download');
-
 //TINDAK LANJUT
 Route::get('/tindaklanjutcreate/{id_rapat}', [TindakLanjutController::class, 'create'])
     ->middleware('CheckMeetingRole:Moderator,PIC')
@@ -154,9 +152,6 @@ Route::delete('/tindaklanjut/{id_tindaklanjut}', [TindaklanjutController::class,
     ->middleware('CheckMeetingRole:Moderator,PIC')
     ->name('tindaklanjut.destroy');
 
-Route::get('/tindaklanjut/{id}/download-pdf', [TindakLanjutController::class, 'downloadPdf'])
-    ->name('tindaklanjut.downloadPdf');
-
 Route::get('/tindaklanjut/user/{id_tindaklanjut}', [TindakLanjutController::class, 'showuser'])->name('tindaklanjut.showuser');
 
 // Upload Lampiran
@@ -175,7 +170,6 @@ Route::delete('/hasil-tindaklanjut/{id_hasiltindaklanjut}', [TindakLanjutControl
 //catatn revisi
 Route::post('/catatan-revisi', [CatatanRevisiController::class, 'store'])->name('catatan-revisi.store');
 Route::put('/catatan-revisi/{id}', [CatatanRevisiController::class, 'update'])->name('catatan-revisi.update');
-
 
 //DOKUMENTASI
 Route::get('/dokumentasicreate/{id_rapat}', [DokumentasiController::class, 'create'])
@@ -203,16 +197,6 @@ Route::delete('/dokumentasi/{id_dokumentasi}', [DokumentasiController::class, 'd
 Route::get('/dokumentasi/{id}/download-pdf', [DokumentasiController::class, 'downloadPDF'])
     ->name('dokumentasi.downloadPDF');
 
-
-//kelola pengguna
-Route::get('/kelolauser', [UserController::class, 'kelolaUser'])->name('kelolauser');
-Route::get('/tambahuser', [UserController::class, 'create'])->name('users.create');
-Route::get('/kelolauser/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
-Route::put('/kelolauser/{id}/update', [UserController::class, 'update'])->name('user.update');
-Route::delete('/kelolauser/{id}', [UserController::class, 'destroy'])->name('user.delete');
-Route::post('/users', [UserController::class, 'store'])->name('users.store');
-Route::post('/upload-foto', [UserController::class, 'uploadFoto'])->name('user.uploadFoto');
-
 //route untuk user 
 
 //halaman kelola rapat
@@ -221,3 +205,6 @@ Route::get('/user/rapat', [UndanganController::class, 'kelolaRapatUser'])->name(
 //halaman meeting detail
 Route::get('/user/rapat/{id}', [UndanganController::class, 'showMeetingDetailUser'])->name('user.rapat.detail');
 
+});
+
+require __DIR__.'/auth.php';

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class fileDokumentasi extends Model
 {
     protected $table = 'file_dokumentasis';
+    protected $primaryKey = 'id_file';
     protected $fillable = [
     'id_dokumentasi',
     'file_path',

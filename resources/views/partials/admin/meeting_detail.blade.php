@@ -147,32 +147,24 @@
                 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-primary">Add</button> <!-- Submit form -->
+                        <button type="submit" class="btn btn-primary">Add</button> 
                     </div>
-                    </form> <!-- Tutup form -->
+                    </form> 
                 </div>
                 </div>
             </div>
 
             <form action="{{ route('peserta.kirimNotifikasi') }}" method="POST">
-    @csrf
-    <input type="hidden" name="id_rapat" value="{{ $rapat->id_rapat }}">
+                @csrf
+                <input type="hidden" name="id_rapat" value="{{ $rapat->id_rapat }}">
     
-    <div class="form-check mt-3">
-        <input class="form-check-input" type="checkbox" id="notifUndangan" name="kirim_notif" value="1">
-        <label class="form-check-label" for="notifUndangan">Kirim Notifikasi Undangan</label>
-    </div>
-    <button class="btn btn-primary mt-2 btn-sm" type="submit">Send</button>
-</form>
-
-            {{-- <div class="form-check mt-3"> --}}
-                {{-- <input class="form-check-input" type="checkbox" id="notifUndangan"> --}}
-                {{-- <label class="form-check-label" for="notifUndangan">Kirim Notifikasi Undangan</label> --}}
-            {{-- </div> --}}
-            {{-- <button class="btn btn-primary mt-2 btn-sm">Send</button> --}}
-
+                <div class="form-check mt-3">
+                    <input class="form-check-input" type="checkbox" id="notifUndangan" name="kirim_notif" value="1">
+                    <label class="form-check-label" for="notifUndangan">Kirim Notifikasi Undangan</label>
+                </div>
+                <button class="btn btn-primary mt-2 btn-sm" type="submit">Send</button>
+            </form>
             <hr>
-
             <div class="text-center">
                 <a href="{{ route('rekap.kehadiran', ['id_rapat' => $id_rapat]) }}"><img src="{{ asset('assets/rekapkehadiran.png') }}" class="img-fluid mb-2" style="width: 100px;"></a>
                 <h5 class="fw-semibold">Rekap Kehadiran</h5>

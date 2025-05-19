@@ -83,15 +83,27 @@ public function show($id_notulensi)
             'konten_notulensi' => $request->konten_notulensi,
         ]);
 
-        return redirect()->route('meeting.detail', ['id' => $notulensi->id_rapat])->with('success', 'Notulensi berhasil diperbarui.');
+        if (auth()->user()->role == 'admin') {
+            return redirect()->route('meeting.detail', ['id' => $notulensi->id_rapat])
+                ->with('success', 'Tindak lanjut berhasil diperbarui.');
+        } else {
+            return redirect()->route('user.rapat.detail', ['id' => $notulensi->id_rapat])
+                ->with('success', 'Tindak lanjut berhasil diperbarui.');
+        }
     }
 
     public function destroy($id_notulensi)
-{
-    $notulensi = Notulensi::findOrFail($id_notulensi);
-    $notulensi->delete();
-
-    return redirect()->route('meeting.detail', ['id' => $notulensi->id_rapat])->with('success', 'Notulensi berhasil dihapus.');
+    {
+        $notulensi = Notulensi::findOrFail($id_notulensi);
+        $notulensi->delete();
+    
+        if (auth()->user()->role == 'admin') {
+        return redirect()->route('meeting.detail', ['id' => $notulensi->id_rapat])
+            ->with('success', 'Tindak lanjut berhasil diperbarui.');
+    } else {
+        return redirect()->route('user.rapat.detail', ['id' => $notulensi->id_rapat])
+            ->with('success', 'Tindak lanjut berhasil diperbarui.');
+    }
 }
 
 public function downloadPDF($id)

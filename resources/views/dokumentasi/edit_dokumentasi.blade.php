@@ -70,7 +70,12 @@
                 <!-- Tombol -->
                 <div class="d-flex gap-3">
                     <button type="submit" class="btn btn-primary">Update</button>
+                @if(auth()->user()->role == 'admin')
                     <a href="{{ route('meeting.detail', ['id' => $dokumentasi->id_rapat]) }}" class="btn btn-danger">Cancel</a>
+                @else
+                    <a href="{{ route('user.rapat.detail', ['id' => $dokumentasi->id_rapat]) }}" class="btn btn-danger">Cancel</a>
+                @endif
+                    {{-- <a href="{{ route('meeting.detail', ['id' => $dokumentasi->id_rapat]) }}" class="btn btn-danger">Cancel</a> --}}
                 </div>
             </form>
         </div>

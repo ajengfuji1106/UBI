@@ -58,18 +58,6 @@ class TindakLanjutController extends Controller
     // Assign ke banyak user lewat pivot table
     $tindakLanjut->users()->attach($request->id_user);
 
-        // foreach ($request->id_user as $userId) {
-        // TindakLanjut::create([
-            // 'id_rapat' => $request->id_rapat,
-            // 'id_user' => $userId,
-            // 'id_user' => $request->id_user,
-            // 'judul_tugas' => $request->judul_tugas,
-            // 'deadline_tugas' => $request->deadline_tugas,
-            // 'deskripsi_tugas' => $request->deskripsi_tugas,
-            // 'status_tugas' => $request->status_tugas,
-            // 'file_path' => $filePath,
-        // ]);
-        // }
         // Jika checkbox dicentang, kirim notifikasi
     if ($request->has('kirim_notifikasi')) {
         foreach ($request->id_user as $userId) {
@@ -165,27 +153,32 @@ class TindakLanjutController extends Controller
         }
     }
 
-    return redirect()->route('meeting.detail', ['id' => $tindaklanjut->id_rapat])->with('success', 'Tindak lanjut berhasil diperbarui.');
+    if (auth()->user()->role == 'admin') {
+        return redirect()->route('meeting.detail', ['id' => $tindaklanjut->id_rapat])
+            ->with('success', 'Tindak lanjut berhasil diperbarui.');
+    } else {
+        return redirect()->route('user.rapat.detail', ['id' => $tindaklanjut->id_rapat])
+            ->with('success', 'Tindak lanjut berhasil diperbarui.');
+    }
 
     }
 
     public function destroy($id_tindaklanjut)
 {
     $tindaklanjut = Tindaklanjut::findOrFail($id_tindaklanjut);
+
+    // Hapus tindak lanjut
     $tindaklanjut->delete();
 
-    return redirect()->route('meeting.detail', ['id' => $tindaklanjut->id_rapat])->with('success', 'Notulensi berhasil dihapus.');
+    if (auth()->user()->role == 'admin') {
+    return redirect()->route('meeting.detail', ['id' => $tindaklanjut->id_rapat])
+        ->with('success', 'Tindak lanjut berhasil diperbarui.');
+    } else {
+    return redirect()->route('user.rapat.detail', ['id' => $tindaklanjut->id_rapat])
+        ->with('success', 'Tindak lanjut berhasil diperbarui.');
 }
 
-public function downloadPdf($id)
-{
-    $tindaklanjut = TindakLanjut::findOrFail($id);
-    $partisipan = $tindaklanjut->users; // Sesuaikan dengan relasi
-
-    $pdf = Pdf::loadView('tindaklanjut.tindaklanjut_pdf', compact('tindaklanjut', 'partisipan'));
-    return $pdf->download('tindaklanjut-'.$tindaklanjut->id_TindakLanjut.'.pdf');
 }
-
     //SISI USER
     public function showuser($id_tindaklanjut)
     {

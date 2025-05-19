@@ -100,12 +100,14 @@
                             Kirim Notifikasi Tindak Lanjut
                         </label>
                     </div>
-
-                <!-- Tombol -->
-                <div class="d-flex gap-2">
-                    <a href="{{ route('meeting.detail', ['id' => $tindaklanjut->id_rapat]) }}" class="btn btn-danger">Cancel</a>
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </div>
+                    <div class="d-flex gap-2">
+                        @if(auth()->user()->role == 'admin')
+                            <a href="{{ route('meeting.detail', ['id' => $tindaklanjut->id_rapat]) }}" class="btn btn-danger">Cancel</a>
+                        @else
+                            <a href="{{ route('user.rapat.detail', ['id' => $tindaklanjut->id_rapat]) }}" class="btn btn-danger">Cancel</a>
+                        @endif
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
             </form>
         </div>
     </div>
