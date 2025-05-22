@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('rapats', function (Blueprint $table) {
             $table->id('id_rapat');
-            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
+            $table->unsignedBigInteger('id_user');
+            // $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
             $table->string('judul_rapat');
             $table->date('tanggal_rapat');
             $table->time('waktu_rapat');

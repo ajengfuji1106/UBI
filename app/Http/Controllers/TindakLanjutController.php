@@ -49,6 +49,7 @@ class TindakLanjutController extends Controller
 
         $tindakLanjut = TindakLanjut::create([
         'id_rapat' => $request->id_rapat,
+        // 'id_user' => auth()->id(),
         'judul_tugas' => $request->judul_tugas,
         'deadline_tugas' => $request->deadline_tugas,
         'deskripsi_tugas' => $request->deskripsi_tugas,
@@ -68,8 +69,14 @@ class TindakLanjutController extends Controller
         }
     }
 
-        return redirect()->route('meeting.detail', ['id' => $request->id_rapat]) ->with('success', 'Notulensi berhasil ditambahkan!');
-
+        if (auth()->user()->role == 'admin') {
+        return redirect()->route('meeting.detail', ['id' => $request->id_rapat])
+            ->with('success', 'Tindak lanjut berhasil diperbarui.');
+    } else {
+        return redirect()->route('user.rapat.detail', ['id' => $request->id_rapat])
+            ->with('success', 'Tindak lanjut berhasil diperbarui.');
+    }
+    
     }
 
     public function show($id_tindaklanjut)
@@ -198,11 +205,6 @@ public function uploadLampiran(Request $request, $id_tindaklanjut)
     ]);
 
     $tindaklanjut = TindakLanjut::findOrFail($id_tindaklanjut);
-
-    $bolehUpload = $tindaklanjut->hasil->where('id_user', auth()->id())->isNotEmpty();
-if (! $bolehUpload) {
-    abort(403, 'Anda tidak memiliki tugas untuk mengunggah lampiran ini.');
-}
 
     $file = $request->file('file_path');
 

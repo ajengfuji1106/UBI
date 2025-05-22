@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('pesertas', function (Blueprint $table) {
             $table->id('id_peserta');
-            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
-            $table->foreignId('id_rapat')->constrained('rapat')->onDelete('cascade');
+            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_rapat');
+            // $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
+            // $table->foreignId('id_rapat')->constrained('rapats', 'id_rapat')->onDelete('cascade');
+            // $table->foreignId('id_rapat')->constrained('rapats')->onDelete('cascade');
             $table->string('status_kehadiran')->nullable();
             $table->string('role_peserta');
             $table->timestamps();

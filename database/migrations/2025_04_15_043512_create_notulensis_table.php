@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('notulensis', function (Blueprint $table) {
             $table->id('id_notulensi');
-            // $table->foreignId('id_rapat')->constrained('rapat')->onDelete('cascade');
+            $table->unsignedBigInteger('id_rapat');
+            $table->unsignedBigInteger('id_user');
+            // $table->foreignId('id_rapat')->constrained('rapats', 'id_rapat')->onDelete('cascade');
             // $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
-            $table->foreignId('id_user')->nullable()->constrained('users')->onDelete('cascade');
+            // $table->foreignId('id_user')->nullable()->constrained('users')->onDelete('cascade');
             $table->string('judul_notulensi');
             $table->text('konten_notulensi');
             $table->timestamps();

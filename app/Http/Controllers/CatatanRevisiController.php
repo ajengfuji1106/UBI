@@ -11,11 +11,13 @@ class CatatanRevisiController extends Controller
     public function store(Request $request)
 {
     $request->validate([
+        'id_tindaklanjut' => 'required|exists:tindak_lanjuts,id_tindaklanjut',
         'catatanrevisi' => 'required|string',
         'id_hasiltindaklanjut' => 'required|exists:hasil_tindak_lanjuts,id_hasiltindaklanjut',
     ]);
 
     catatanRevisi::create([
+        'id_tindaklanjut' => $request->id_tindaklanjut,
         'id_hasiltindaklanjut' => $request->id_hasiltindaklanjut,
         'catatanrevisi' => $request->catatanrevisi,
         'id_user' => Auth::id(),

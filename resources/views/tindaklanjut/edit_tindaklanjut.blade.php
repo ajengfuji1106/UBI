@@ -20,7 +20,7 @@
 
                 <!-- Judul Tugas -->
                 <div class="mb-3">
-                    <label class="form-label">Judul Tugas *</label>
+                    <label class="form-label">Judul Tugas</label>
                     <input 
                         type="text" 
                         name="judul_tugas" 
@@ -32,7 +32,7 @@
 
                 <!-- Deadline -->
                 <div class="mb-3">
-                    <label class="form-label">Deadline *</label>
+                    <label class="form-label">Deadline</label>
                     <input 
                         type="date" 
                         name="deadline_tugas" 
@@ -44,7 +44,7 @@
 
                 <!-- Partisipan -->
                 <div class="mb-3 position-relative">
-                    <label class="form-label">Partisipan *</label>
+                    <label class="form-label">Partisipan</label>
                     <button type="button" class="form-control text-start" data-bs-toggle="dropdown" aria-expanded="false">
                         Masukkan Partisipan
                     </button>
@@ -78,7 +78,7 @@
 
                 <!-- Detail Tugas -->
                 <div class="mb-3">
-                    <label class="form-label">Detail Tugas *</label>
+                    <label class="form-label">Detail Tugas</label>
                     <textarea id="editor" name="deskripsi_tugas" class="form-control">{!! $tindaklanjut->deskripsi_tugas !!}</textarea>
                 </div>
 

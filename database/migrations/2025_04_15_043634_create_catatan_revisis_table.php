@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('catatan_revisis', function (Blueprint $table) {
             $table->id('id_catatanrevisi');
+            $table->unsignedBigInteger('id_tindaklanjut');
+            $table->unsignedBigInteger('id_user');
             // $table->foreignId('id_tindaklanjut')->constrained('tindaklanjuts')->onDelete('cascade');
-            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
+            // $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
             $table->string('catatanrevisi');
             $table->timestamps();
         });

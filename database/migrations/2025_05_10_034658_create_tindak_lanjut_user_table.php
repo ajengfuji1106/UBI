@@ -16,15 +16,15 @@ return new class extends Migration
     $table->unsignedBigInteger('id_tindaklanjut');
     $table->unsignedBigInteger('id_user');
 
-    $table->foreign('id_tindaklanjut')
-        ->references('id_tindaklanjut')
-        ->on('tindak_lanjuts')
-        ->onDelete('cascade');
-    $table->foreign('id_user')
-        ->references('id') 
-        ->on('users')
-        ->onDelete('cascade');
-        $table->enum('status_tugas', ['Pending', 'In Progress', 'Completed'])->default('Pending');
+    // $table->foreign('id_tindaklanjut')
+        // ->references('id_tindaklanjut')
+        // ->on('tindak_lanjuts')
+        // ->onDelete('cascade');
+    // $table->foreign('id_user')
+        // ->references('id') 
+        // ->on('users')
+        // ->onDelete('cascade');
+    $table->enum('status_tugas', ['Pending', 'In Progress', 'Completed'])->default('Pending');
     $table->timestamps();
 });
 

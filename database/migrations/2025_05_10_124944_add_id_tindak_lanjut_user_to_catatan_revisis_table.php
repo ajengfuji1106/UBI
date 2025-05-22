@@ -14,7 +14,7 @@ return new class extends Migration
     Schema::table('catatan_revisis', function (Blueprint $table) {
         $table->unsignedBigInteger('id_tindak_lanjut_user')->after('id_catatanrevisi')->nullable();
 
-        $table->foreign('id_tindak_lanjut_user')->references('id')->on('tindak_lanjut_user')->onDelete('cascade');
+        // $table->foreign('id_tindak_lanjut_user')->references('id')->on('tindak_lanjut_user')->onDelete('cascade');
     });
 }
 

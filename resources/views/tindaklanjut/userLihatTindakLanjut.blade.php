@@ -55,16 +55,17 @@
                     </thead>
                     <tbody>
                     @php
-                        $bolehUpload = $tindaklanjut->hasil->where('id_user', auth()->id())->isNotEmpty();
+                        $ditugaskan = $tindaklanjut->users->contains(auth()->id());
                     @endphp
-                        @if ($bolehUpload)
+
+                    @if($ditugaskan)
                     <tr>
                         <td colspan="3">
                             <form action="{{ route('upload.lampiran', ['id_tindaklanjut' => $tindaklanjut->id_tindaklanjut]) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                <input type="file" name="file_path" id="lampiranFile" class="form-control d-none" onchange="this.form.submit()">
+                                <input type="file" name="file_path" id="lampiranFile{{ $tindaklanjut->id_tindaklanjut }}" class="form-control d-none" onchange="this.form.submit()">
                             
-                                <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('lampiranFile').click()">Upload Lampiran</button>
+                                <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('lampiranFile{{ $tindaklanjut->id_tindaklanjut }}').click()">Upload Lampiran</button>
                             </form>
                         </td>
                     </tr>
@@ -131,7 +132,6 @@
             </div>
         </div>
     </div>
-    
 </div>
 </div>
 @endsection

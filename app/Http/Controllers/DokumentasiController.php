@@ -53,8 +53,14 @@ class DokumentasiController extends Controller
         }
     }
 
-    return redirect()->route('meeting.detail', ['id' => $request->id_rapat])
-        ->with('success', 'Dokumentasi berhasil ditambahkan.');
+            if (auth()->user()->role == 'admin') {
+        return redirect()->route('meeting.detail', ['id' => $request->id_rapat])
+            ->with('success', 'Dokumentasi berhasil diperbarui.');
+    } else {
+        return redirect()->route('user.rapat.detail', ['id' => $request->id_rapat])
+            ->with('success', 'Dokumentasi berhasil diperbarui.');
+    }
+
 }
 
 

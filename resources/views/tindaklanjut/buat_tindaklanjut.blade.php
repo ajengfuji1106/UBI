@@ -16,10 +16,12 @@
             <form action="{{ route('tindaklanjut.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="id_rapat" value="{{ $id_rapat ?? '' }}">
+                <input type="hidden" name="id_user" value="{{ auth()->id() }}">
+
 
                 <!-- Judul Tugas -->
                 <div class="mb-3">
-                    <label class="form-label">Judul Tugas *</label>
+                    <label class="form-label">Judul Tugas</label>
                     <input 
                         type="text" 
                         name="judul_tugas" 
@@ -30,7 +32,7 @@
 
                 <!-- Deadline -->
                 <div class="mb-3">
-                    <label class="form-label">Deadline *</label>
+                    <label class="form-label">Deadline</label>
                     <input 
                         type="date" 
                         name="deadline_tugas" 
@@ -41,7 +43,7 @@
 
                 <!-- Partisipan -->
                 <div class="mb-3 position-relative">
-                    <label class="form-label">Partisipan *</label>
+                    <label class="form-label">Partisipan</label>
                                 
                     <!-- Trigger -->
                     <button type="button" class="form-control text-start" data-bs-toggle="dropdown" aria-expanded="false">
@@ -77,15 +79,15 @@
 
                 <!-- Detail Tugas -->
                 <div class="mb-3">
-                    <label class="form-label">Detail Tugas *</label>
+                    <label class="form-label">Detail Tugas</label>
                     <textarea id="editor" name="deskripsi_tugas" class="form-control"></textarea>
                 </div>
 
                 <!-- Lampiran -->
                 <div class="mb-3">
-                    <label class="form-label">Upload Lampiran *</label>
+                    <label class="form-label">Upload Lampiran</label>
                     <div id="dropArea" class="form-control p-4 text-center rounded" style="cursor: pointer;">
-                        <input type="file" name="file_path" class="d-none" id="fileInput" required>
+                        <input type="file" name="file_path" class="d-none" id="fileInput">
                         <p class="text-muted mb-1" id="uploadText">Drag and Drop here or</p>
                         <p class="text-muted small" id="infoText">Allowed: PDF, DOCX, JPG (max 5MB)</p>
                         <button type="button" onclick="document.getElementById('fileInput').click()" class="btn btn-outline-success btn-sm">Select file</button>
@@ -102,9 +104,15 @@
 
                 <!-- Tombol -->
                 <div class="d-flex gap-2">
-                    <a href="{{ route('meeting.detail', ['id' => $id_rapat]) }}" class="btn btn-danger">Cancel</a>
+                    @if (auth()->user()->role === 'admin')
+                        <a href="{{ route('meeting.detail', ['id' => $id_rapat]) }}" class="btn btn-danger">Cancel</a>
+                    @else
+                        <a href="{{ route('user.rapat.detail', ['id' => $id_rapat]) }}" class="btn btn-danger">Cancel</a>
+                    @endif
+                                
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
+
             </form>
         </div>
     </div>

@@ -1,5 +1,6 @@
 @extends('partials.admin.main')
 @section('content')
+
 <div class="bg-white rounded-3 p-4" style="margin-left: 260px; margin-top: 65px; height: auto; ">
     <div class="card p-5 shadow-lg border-0">
     <div class="row gx-4 align-items-start">

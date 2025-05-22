@@ -71,6 +71,7 @@
                                         <div class="modal-dialog">
                                             <form action="{{ route('catatan-revisi.store') }}" method="POST">
                                                 @csrf
+                                                <input type="hidden" name="id_tindaklanjut" value="{{ $hasil->id_tindaklanjut }}">
                                                 <input type="hidden" name="id_hasiltindaklanjut" value="{{ $hasil->id_hasiltindaklanjut }}">
                                                 <div class="modal-content">
                                                     <div class="modal-header">

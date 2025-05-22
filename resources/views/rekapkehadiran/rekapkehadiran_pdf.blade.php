@@ -1,32 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>Rekap Kehadiran</title>
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-        .dot {
-            height: 10px;
-            width: 10px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        .dot-hadir { background-color: #4CAF50; }
-        .dot-tidak-hadir { background-color: #f44336; }
-        .dot-izin { background-color: #ffc107; }
+        body { font-family: sans-serif; font-size: 12px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #000; padding: 5px; text-align: center; }
+        th { background-color: #f2f2f2; }
     </style>
 </head>
 <body>
-    <h2>Rekap Kehadiran</h2>
+    <h3>Rekap Kehadiran - {{ $rapat->nama_rapat }}</h3>
+    <p>Tanggal: {{ \Carbon\Carbon::parse($rapat->tanggal_rapat)->format('d M Y') }}</p>
+
     <table>
         <thead>
             <tr>
@@ -36,19 +23,11 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($pesertas as $peserta)
+            @foreach ($pesertas as $peserta)
             <tr>
-                <td>{{ $peserta->nama }}</td>
-                <td>
-                    @if($peserta->status_kehadiran == 'hadir')
-                        <span class="dot dot-hadir"></span>
-                    @elseif($peserta->status_kehadiran == 'tidak_hadir')
-                        <span class="dot dot-tidak-hadir"></span>
-                    @elseif($peserta->status_kehadiran == 'izin')
-                        <span class="dot dot-izin"></span>
-                    @endif
-                </td>
-                <td>{{ $peserta->role }}</td>
+                <td>{{ $peserta->user->name }}</td>
+                <td>{{ ucfirst(str_replace('_', ' ', $peserta->status_kehadiran)) }}</td>
+                <td>{{ $peserta->role_peserta }}</td>
             </tr>
             @endforeach
         </tbody>

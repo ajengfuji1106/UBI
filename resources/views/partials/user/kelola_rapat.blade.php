@@ -4,7 +4,7 @@
 <div class="bg-white rounded-3 p-4" style="margin-left: 260px; margin-top: 75px; height: auto;">
     <div class="card p-4 shadow-lg border-0">
 
-        {{-- Search dan Sort --}}
+        {{-- Filter Search dan Sort --}}
         <div class="d-flex justify-content-between align-items-center p-3 rounded" style="background-color: #f3f8fc;">
             <form method="GET" class="d-flex align-items-center gap-2">
                 <label class="me-2 mb-0">Filter :</label>
@@ -14,7 +14,7 @@
                     <option value="Eksternal" {{ request('kategori_rapat') == 'Eksternal' ? 'selected' : '' }}>Eksternal</option>
                 </select>
             </form>
-            
+
             <div class="position-relative w-50">
                 <input id="searchInput" type="text" class="form-control ps-5" placeholder="Search..." style="border-radius: 10px; padding-left: 2.5rem;">
                 <svg xmlns="http://www.w3.org/2000/svg"

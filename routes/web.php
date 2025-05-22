@@ -96,12 +96,10 @@ Route::delete('peserta/{id_peserta}', [PesertaController::class, 'destroy'])
     ->name('peserta.destroy');
 
 Route::post('/peserta/kirim-notifikasi', [PesertaController::class, 'kirimNotifUndangan'])->name('peserta.kirimNotifikasi');
-// Route::get('rapat/{id_rapat}/peserta', [PesertaController::class, 'index'])->name('peserta.index');
 
 //rekap kehadiran
 Route::get('/rekap-kehadiran/{id_rapat}', [PesertaController::class, 'rekap'])->name('rekap.kehadiran');
-// Route::get('/rekap-kehadiran', [PesertaController::class, 'rekap'])->name('rekap.kehadiran');
-Route::get('/rekap-kehadiran/download', [PesertaController::class, 'downloadRekap'])->name('rekap.download');
+Route::get('/rekap-kehadiran/pdf/{rapat}', [PesertaController::class, 'exportRekapKehadiranPdf'])->name('rekap-kehadiran.pdf');
 Route::post('/peserta/kehadiran/{id_peserta}', [PesertaController::class, 'konfirmasiKehadiran'])->name('peserta.konfirmasi');
 Route::put('/peserta/{id_peserta}/update-status/{status}', [PesertaController::class, 'updateStatus'])->name('peserta.updateStatus');
 

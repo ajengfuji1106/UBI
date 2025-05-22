@@ -19,16 +19,6 @@
                                 <option value="Eksternal" {{ request('kategori_rapat') == 'Eksternal' ? 'selected' : '' }}>Eksternal</option>
                             </select>
                         </form>
-
-                    {{-- <div> --}}
-                        {{-- <button class="btn btn-outline-secondary d-flex align-items-center gap-1"> --}}
-                            {{-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"> --}}
-                                {{-- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" --}}
-                                    {{-- d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L15 14.414V19a1 1 0 01-.553.894l-4 2A1 1 0 019 21v-6.586L3.293 6.707A1 1 0 013 6V4z" /> --}}
-                            {{-- </svg> --}}
-                            {{-- Filter <span class="badge bg-primary">2</span> --}}
-                        {{-- </button> --}}
-                    {{-- </div> --}}
                     <div class="position-relative w-50">
                         <input id="searchInput" type="text" class="form-control ps-5" placeholder="Search..." style="border-radius: 10px; padding-left: 2.5rem;">
                         <svg xmlns="http://www.w3.org/2000/svg"

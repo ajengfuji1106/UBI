@@ -3,8 +3,9 @@
 @section('content')
 <div class="bg-white rounded-3 p-4" style="margin-left: 260px; margin-top: 65px; height: auto; ">
     <div class="card p-4 shadow-lg border-0">
+    {{-- button download --}}
     <div class="d-flex justify-content-end mb-3">
-        <a href="{{ route('rekap.download') }}" class="btn btn-primary">Download</a>
+        <a href="{{ route('rekap-kehadiran.pdf', $rapat->id_rapat) }}" class="btn btn-primary mb-3"> Download</a>
     </div>
     <div class="card p-3">
       <div class="table-responsive">

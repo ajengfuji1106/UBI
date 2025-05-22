@@ -18,7 +18,7 @@
 
                 <!-- Judul Dokumentasi -->
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Judul Dokumentasi *</label>
+                    <label class="form-label fw-semibold">Judul Dokumentasi</label>
                     <input type="text" name="judul_dokumentasi" class="form-control" required>
                 </div>
 
@@ -54,8 +54,12 @@
 
                 <!-- Tombol -->
                 <div class="d-flex gap-3">
-                    <button type="submit" class="btn btn-primary">Save</button>
-                    <a href="{{ route('meeting.detail', ['id' => $id_rapat]) }}" class="btn btn-danger">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    @if(auth()->user()->role == 'admin')
+                        <a href="{{ route('meeting.detail', ['id' => $id_rapat]) }}" class="btn btn-danger">Cancel</a>
+                    @else
+                        <a href="{{ route('user.rapat.detail', ['id' => $id_rapat]) }}" class="btn btn-danger">Cancel</a>
+                    @endif
                 </div>
             </form>
         </div>

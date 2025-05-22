@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('dokumentasis', function (Blueprint $table) {
             $table->id('id_dokumentasi');
-            // $table->foreignId('id_rapat')->constrained('rapat')->onDelete('cascade');
+            $table->unsignedBigInteger('id_rapat');
+            // $table->foreignId('id_rapat')->constrained('rapats', 'id_rapat')->onDelete('cascade');
             $table->string('judul_dokumentasi');
             $table->text('deskripsi')->nullable();
             $table->string('file_path')->nullable();

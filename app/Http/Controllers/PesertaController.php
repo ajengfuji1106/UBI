@@ -128,50 +128,51 @@ return redirect()->route('meeting.detail', ['id' => $peserta->id_rapat])
 //rekap kehadiran
 public function rekap($id_rapat)
     {
+        $rapat = Rapat::findOrFail($id_rapat);
         $pesertas = Peserta::with('user') // Mengambil relasi user untuk mendapatkan nama
                        ->where('id_rapat', $id_rapat) // Filter berdasarkan rapat
                        ->get();
-        return view('rekapkehadiran.rekap_kehadiran', compact('pesertas'));
+        return view('rekapkehadiran.rekap_kehadiran', compact('pesertas', 'rapat'));
     }
 
-//download rekap kehadiran
-public function downloadRekap()
-{
-    $pesertas = Peserta::all(); // Ambil semua peserta (ubah kalau mau filter)
+    //download rekap kehadiran
+    public function exportRekapKehadiranPdf($rapatId)
+    {
+        $rapat = Rapat::findOrFail($rapatId);
+        $pesertas = $rapat->peserta()->with('user')->get(); // pastikan relasi 'pesertas' ada di model Rapat
 
-    $pdf = Pdf::loadView('rekapkehadiran.rekapkehadiran_pdf', compact('pesertas'));
-
-    return $pdf->download('rekap_kehadiran.pdf');
-}
-
-public function konfirmasiKehadiran(Request $request, $id_peserta)
-{
-    // dd($id_peserta, $request->all());
-    $peserta = Peserta::findOrFail($id_peserta);
-
-    // Cegah konfirmasi ulang
-    if ($peserta->status_kehadiran) {
-        return redirect()->back()->with('error', 'Kehadiran sudah dikonfirmasi. Tidak bisa mengubah lagi.');
+        $pdf = Pdf::loadView('rekapkehadiran.rekapkehadiran_pdf', compact('rapat', 'pesertas'));
+        return $pdf->download('Rekap-Kehadiran-' . $rapat->nama_rapat . '.pdf');
     }
 
-    // dd($request->all());
-    // Validasi status
-    $request->validate([
-        'status_kehadiran' => 'required|in:hadir,tidak_hadir',
-        'bukti_kehadiran' => 'nullable|image|max:2048', // jika pakai upload
-    ]);
-
-    // Simpan file jika ada
-    if ($request->hasFile('bukti_kehadiran')) {
-        $path = $request->file('bukti_kehadiran')->store('bukti_kehadiran', 'public');
-        $peserta->bukti_kehadiran = $path;
+    public function konfirmasiKehadiran(Request $request, $id_peserta)
+    {
+        // dd($id_peserta, $request->all());
+        $peserta = Peserta::findOrFail($id_peserta);
+    
+        // Cegah konfirmasi ulang
+        if ($peserta->status_kehadiran) {
+            return redirect()->back()->with('error', 'Kehadiran sudah dikonfirmasi. Tidak bisa mengubah lagi.');
+        }
+    
+        // dd($request->all());
+        // Validasi status
+        $request->validate([
+            'status_kehadiran' => 'required|in:hadir,tidak_hadir',
+            'bukti_kehadiran' => 'nullable|image|max:2048', // jika pakai upload
+        ]);
+    
+        // Simpan file jika ada
+        if ($request->hasFile('bukti_kehadiran')) {
+            $path = $request->file('bukti_kehadiran')->store('bukti_kehadiran', 'public');
+            $peserta->bukti_kehadiran = $path;
+        }
+    
+        $peserta->status_kehadiran = $request->status_kehadiran;
+        $peserta->save();
+    
+        return back()->with('success', 'Kehadiran berhasil dikonfirmasi!');
     }
-
-    $peserta->status_kehadiran = $request->status_kehadiran;
-    $peserta->save();
-
-    return back()->with('success', 'Kehadiran berhasil dikonfirmasi!');
-}
     public function updateStatus($id_peserta, $status)
     {
         $peserta = Peserta::findOrFail($id_peserta);

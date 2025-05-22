@@ -38,9 +38,15 @@
 
                         {{-- Tombol Aksi --}}
                         <div class="d-flex justify-content-end gap-2">
-                            <a href="{{ route('meeting.detail', ['id' => $id_rapat]) }}" class="btn btn-danger">Cancel</a>
+                            @if (auth()->user()->role === 'admin')
+                                <a href="{{ route('meeting.detail', ['id' => $id_rapat]) }}" class="btn btn-danger">Cancel</a>
+                            @else
+                                <a href="{{ route('user.rapat.detail', ['id' => $id_rapat]) }}" class="btn btn-danger">Cancel</a>
+                            @endif
+                                                
                             <button type="submit" class="btn btn-primary">Save</button>
                         </div>
+
                     </form>
                 </div>
             

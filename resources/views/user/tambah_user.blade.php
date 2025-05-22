@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="mb-3 row align-items-center">
-                    <label class="col-sm-3 col-form-label fw-semibold">Profile Image*</label>
+                    <label class="col-sm-3 col-form-label fw-semibold">Profile Image</label>
                     <div class="col-sm-9">
                         <div class="d-flex align-items-center gap-3 mb-2">
                             <div class="rounded-circle bg-light d-flex justify-content-center align-items-center overflow-hidden" style="width: 60px; height: 60px;">

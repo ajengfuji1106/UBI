@@ -38,8 +38,14 @@ public function store(Request $request)
         'konten_notulensi' => $request->konten_notulensi,
     ]);
 
-    return redirect()->route('meeting.detail', ['id' => $request->id_rapat])
-        ->with('success', 'Notulensi berhasil ditambahkan!');
+        if (auth()->user()->role == 'admin') {
+        return redirect()->route('meeting.detail', ['id' => $request->id_rapat])
+            ->with('success', 'Tindak lanjut berhasil diperbarui.');
+    } else {
+        return redirect()->route('user.rapat.detail', ['id' => $request->id_rapat])
+            ->with('success', 'Tindak lanjut berhasil diperbarui.');
+    }
+
 }
 
 public function show($id_notulensi)

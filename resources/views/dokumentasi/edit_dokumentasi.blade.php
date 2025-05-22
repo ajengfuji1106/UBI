@@ -19,7 +19,7 @@
 
                 <!-- Judul Dokumentasi -->
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Judul Dokumentasi *</label>
+                    <label class="form-label fw-semibold">Judul Dokumentasi</label>
                     <input type="text" name="judul_dokumentasi" class="form-control" value="{{ old('judul_dokumentasi', $dokumentasi->judul_dokumentasi) }}" required>
                 </div>
 
@@ -75,7 +75,7 @@
                 @else
                     <a href="{{ route('user.rapat.detail', ['id' => $dokumentasi->id_rapat]) }}" class="btn btn-danger">Cancel</a>
                 @endif
-                    {{-- <a href="{{ route('meeting.detail', ['id' => $dokumentasi->id_rapat]) }}" class="btn btn-danger">Cancel</a> --}}
+
                 </div>
             </form>
         </div>

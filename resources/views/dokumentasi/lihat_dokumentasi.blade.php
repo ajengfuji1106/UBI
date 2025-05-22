@@ -5,11 +5,13 @@
     <div class="bg-white rounded-3 p-4" style="margin-left: 260px; margin-top: 40px; height: auto; ">
         <div class="card p-4 shadow-lg border-0">
         <h1 class="h4 fw-bold mb-3">Judul Dokumentasi : {{ $dokumentasi->judul_dokumentasi }}</h1>
-        <p class="text-secondary mb-1"><strong>Deskripsi:</strong></p>
-        {{-- Deskripsi dokumentasi (render dengan HTML dari TinyMCE) --}}
-        <div class="mb-4">
-            {!! $dokumentasi->deskripsi !!}
-        </div>
+        @if (!empty($dokumentasi->deskripsi))
+            <p class="text-secondary mb-1"><strong>Deskripsi:</strong></p>
+             {{-- Deskripsi dokumentasi (render dengan HTML dari TinyMCE) --}}
+            <div class="mb-4">
+                {!! $dokumentasi->deskripsi !!}
+            </div>
+        @endif
 
         {{-- Tampilkan file-file dokumentasi jika ada --}}
         @if ($dokumentasi->files->isNotEmpty())
