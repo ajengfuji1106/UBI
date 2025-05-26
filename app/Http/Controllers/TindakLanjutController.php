@@ -39,7 +39,7 @@ class TindakLanjutController extends Controller
             'deadline_tugas' => 'required|date',
             'deskripsi_tugas' => 'required|string',
             // 'status_tugas' => 'required|in:Pending,In Progress,Completed',
-            'file_path' => 'nullable|file|mimes:pdf,doc,docx|max:2048'
+            'file_path' => 'nullable|file|mimes:pdf,doc,docx|max:51200'
         ]);
 
         $filePath = null;
@@ -133,7 +133,7 @@ class TindakLanjutController extends Controller
     'deskripsi_tugas' => 'required|string',
     'id_user' => 'required|array',
     'id_user.*' => 'exists:users,id',
-    'file_path' => 'nullable|file|mimes:pdf,doc,docx|max:2048'
+    'file_path' => 'nullable|file|mimes:pdf,doc,docx|max:51200'
     ]);
 
     $tindaklanjut = TindakLanjut::findOrFail($id_tindaklanjut);
@@ -201,7 +201,7 @@ class TindakLanjutController extends Controller
 public function uploadLampiran(Request $request, $id_tindaklanjut)
 {
     $request->validate([
-        'file_path' => 'required|file|mimes:pdf,doc,docx,xlsx,jpg,png|max:2048',
+        'file_path' => 'required|file|mimes:pdf,doc,docx,xlsx,jpg,png|max:51200',
     ]);
 
     $tindaklanjut = TindakLanjut::findOrFail($id_tindaklanjut);

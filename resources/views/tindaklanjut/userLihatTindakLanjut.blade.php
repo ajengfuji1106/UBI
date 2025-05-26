@@ -23,7 +23,7 @@
                 @endforeach
             </ul>
         
-            <p class="text-secondary mb-1"><strong>Detail Tugas:</strong></p>
+            <p class="mb-1"><strong>Detail Tugas :</strong></p>
             {{-- Render deskripsi tugas (HTML dari TinyMCE) --}}
             <div class="mb-4">
                 {!! $tindaklanjut->deskripsi_tugas !!}

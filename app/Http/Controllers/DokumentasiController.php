@@ -140,40 +140,6 @@ public function show($id_dokumentasi)
     }
 
 }
-
-// public function update(Request $request, $id_dokumentasi)
-// {
-    // $dokumentasi = Dokumentasi::where('id_dokumentasi', $id_dokumentasi)->firstOrFail();
-// 
-    // $request->validate([
-        // 'judul_dokumentasi' => 'required|string|max:255',
-        // 'deskripsi' => 'nullable|string',
-        // 'file_path' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048'
-    // ]);
-// 
-    // Cek apakah ada file yang diupload
-    // if ($request->hasFile('file_path')) {
-        // if ($dokumentasi->file_path) {
-            // Storage::disk('public')->delete($dokumentasi->file_path);
-        // }
-// 
-        // $file = $request->file('file_path');
-        // $filePath = $file->store('dokumentasi', 'public');
-    // }
-// 
-    // Update data
-    // $dokumentasi->judul_dokumentasi = $request->judul_dokumentasi;
-    // $dokumentasi->deskripsi = $request->deskripsi;
-// 
-    // if (isset($filePath)) {
-        // $dokumentasi->file_path = $filePath;
-    // }
-// 
-    // $dokumentasi->save();
-// 
-    // return redirect()->route('meeting.detail', ['id' => $dokumentasi->id_rapat])->with('success', 'Dokumentasi berhasil diperbarui.');
-// }
-// 
     public function destroy($id_dokumentasi)
 {
     $dokumentasi = Dokumentasi::where('id_dokumentasi', $id_dokumentasi)->firstOrFail();

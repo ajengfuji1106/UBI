@@ -19,10 +19,10 @@ class NotulensiFactory extends Factory
     public function definition(): array
     {
         return [
-        'id_rapat' => Rapat::factory(),     // otomatis juga buat rapat
-        'id_user' => User::factory(),       // otomatis juga buat user
+        'id_rapat' => Rapat::factory(),  
+        'id_user' => User::factory(),    
         'judul_notulensi' => $this->faker->sentence,
         'konten_notulensi' => $this->faker->paragraph,
-    ];
+        ];
     }
 }

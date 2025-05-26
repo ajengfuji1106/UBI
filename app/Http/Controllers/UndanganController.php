@@ -64,7 +64,7 @@ class UndanganController extends Controller
             'waktu_rapat' => 'required',
             'lokasi_rapat' => 'required',
             'kategori_rapat' => 'required',
-            'file_undangan' => 'required|file|mimes:pdf,doc,docx|max:2048',
+            'file_undangan' => 'required|file|mimes:pdf,doc,docx|max:5120',
         ]);
 
 
@@ -144,7 +144,7 @@ class UndanganController extends Controller
             'waktu_rapat' => 'required',
             'lokasi_rapat' => 'required',
             'kategori_rapat' => 'required',
-            'file_undangan' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'file_undangan' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
             ]);
 
             $undangan = Undangan::findOrFail($id_undangan); // mencari undangan berdasarkan ID
