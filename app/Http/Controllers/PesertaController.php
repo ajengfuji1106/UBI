@@ -62,7 +62,7 @@ public function store(Request $request)
 
     // Redirect setelah sukses
     return redirect()->route('meeting.detail', ['id' => $request->id_rapat])
-    ->with('success', 'Notulensi berhasil ditambahkan!');
+    ->with('success', 'Partisipan berhasil ditambahkan!');
 }
 
 public function show($id) {

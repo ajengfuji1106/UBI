@@ -198,7 +198,7 @@
             window.location.href = url.toString(); // reload halaman dengan query baru
         });
 
-        //opo tambah undangan
+        //pop up tambah undangan
         @if(session('success'))
             Swal.fire({
                 icon: 'success',

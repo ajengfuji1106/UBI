@@ -89,7 +89,7 @@ class UserController extends Controller
     
         $user->save();
     
-        return redirect()->route('kelolauser')->with('success', 'Pengguna berhasil diperbarui');
+        return redirect()->route('kelolauser')->with('success', 'User berhasil diperbarui');
     }
     
 

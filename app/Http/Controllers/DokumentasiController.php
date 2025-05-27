@@ -55,10 +55,10 @@ class DokumentasiController extends Controller
 
             if (auth()->user()->role == 'admin') {
         return redirect()->route('meeting.detail', ['id' => $request->id_rapat])
-            ->with('success', 'Dokumentasi berhasil diperbarui.');
+            ->with('success', 'Dokumentasi berhasil ditambahkan.');
     } else {
         return redirect()->route('user.rapat.detail', ['id' => $request->id_rapat])
-            ->with('success', 'Dokumentasi berhasil diperbarui.');
+            ->with('success', 'Dokumentasi berhasil ditambahkan.');
     }
 
 }
@@ -133,10 +133,10 @@ public function show($id_dokumentasi)
 
         if (auth()->user()->role == 'admin') {
         return redirect()->route('meeting.detail', ['id' => $dokumentasi->id_rapat])
-            ->with('success', 'Tindak lanjut berhasil diperbarui.');
+            ->with('success', 'Dokumentasi berhasil diperbarui.');
     } else {
         return redirect()->route('user.rapat.detail', ['id' => $dokumentasi->id_rapat])
-            ->with('success', 'Tindak lanjut berhasil diperbarui.');
+            ->with('success', 'Dokumentasi berhasil diperbarui.');
     }
 
 }
@@ -153,10 +153,10 @@ public function show($id_dokumentasi)
 
     if (auth()->user()->role == 'admin') {
         return redirect()->route('meeting.detail', ['id' => $dokumentasi->id_rapat])
-            ->with('success', 'Tindak lanjut berhasil diperbarui.');
+            ->with('success', 'Dokumentasi berhasil dihapus.');
     } else {
         return redirect()->route('user.rapat.detail', ['id' => $dokumentasi->id_rapat])
-            ->with('success', 'Tindak lanjut berhasil diperbarui.');
+            ->with('success', 'Dokumentasi berhasil dihapus.');
     }
 
 }

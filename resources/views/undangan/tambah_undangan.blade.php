@@ -5,12 +5,6 @@
     <div class="col-md-8 offset-md-2 bg-white p-4 rounded shadow">
         <h2 class="h4 fw-bold mb-4">Tambah Undangan</h2>
 
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-
         <form action="{{ route('undangan.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 

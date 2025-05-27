@@ -40,10 +40,10 @@ public function store(Request $request)
 
         if (auth()->user()->role == 'admin') {
         return redirect()->route('meeting.detail', ['id' => $request->id_rapat])
-            ->with('success', 'Tindak lanjut berhasil diperbarui.');
+            ->with('success', 'Notulensi berhasil ditambahkan.');
     } else {
         return redirect()->route('user.rapat.detail', ['id' => $request->id_rapat])
-            ->with('success', 'Tindak lanjut berhasil diperbarui.');
+            ->with('success', 'Notulensi berhasil ditambahkan.');
     }
 
 }
@@ -91,10 +91,10 @@ public function show($id_notulensi)
 
         if (auth()->user()->role == 'admin') {
             return redirect()->route('meeting.detail', ['id' => $notulensi->id_rapat])
-                ->with('success', 'Tindak lanjut berhasil diperbarui.');
+                ->with('success', 'Notulensi berhasil diperbarui.');
         } else {
             return redirect()->route('user.rapat.detail', ['id' => $notulensi->id_rapat])
-                ->with('success', 'Tindak lanjut berhasil diperbarui.');
+                ->with('success', 'Notulensi berhasil diperbarui.');
         }
     }
 
@@ -105,10 +105,10 @@ public function show($id_notulensi)
     
         if (auth()->user()->role == 'admin') {
         return redirect()->route('meeting.detail', ['id' => $notulensi->id_rapat])
-            ->with('success', 'Tindak lanjut berhasil diperbarui.');
+            ->with('success', 'Notulensi berhasil dihapus.');
     } else {
         return redirect()->route('user.rapat.detail', ['id' => $notulensi->id_rapat])
-            ->with('success', 'Tindak lanjut berhasil diperbarui.');
+            ->with('success', 'Notulensi berhasil dihapus.');
     }
 }
 

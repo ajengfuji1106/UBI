@@ -6,12 +6,6 @@
 
         <h2 class="mb-4 fw-bold">Edit Undangan</h2>
 
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-
         <form action="{{ route('undangan.update', $undangan->id_undangan) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -43,10 +37,6 @@
                     <option value="Eksternal" {{ $undangan->rapat->kategori_rapat == 'Eksternal' ? 'selected' : '' }}>Eksternal</option>
                 </select>
             </div>
-            {{-- <div class="mb-3"> --}}
-                {{-- <label class="form-label">Kategori Rapat *</label> --}}
-                {{-- <input type="text" name="kategori_rapat" class="form-control" value="{{ $undangan->rapat->kategori_rapat }}" required> --}}
-            {{-- </div> --}}
 
             <div class="mb-3">
                 <label class="form-label">Upload Undangan (Opsional)</label>
@@ -115,5 +105,44 @@ document.addEventListener("DOMContentLoaded", function () {
         infoText.style.display = "none";
     }
 });
+
+    document.querySelector('form').addEventListener('submit', function (e) {
+    let judul = document.querySelector('[name="judul_rapat"]').value.trim();
+    let tanggal = document.querySelector('[name="tanggal_rapat"]').value.trim();
+    let waktu = document.querySelector('[name="waktu_rapat"]').value.trim();
+    let lokasi = document.querySelector('[name="lokasi_rapat"]').value.trim();
+    let kategori = document.querySelector('[name="kategori_rapat"]').value.trim();
+    let fileInput = document.getElementById('fileInput');
+    let file = fileInput.files[0];
+
+    if (!judul || !tanggal || !waktu || !lokasi || !kategori) {
+        e.preventDefault();
+        Swal.fire({
+            icon: 'warning',
+            title: 'Isi Semua Kolom!',
+            text: 'Semua inputan wajib diisi.',
+        });
+        return;
+    }
+
+    if (file && file.size > 5 * 1024 * 1024) {
+        e.preventDefault();
+        Swal.fire({
+            icon: 'error',
+            title: 'File Terlalu Besar!',
+            text: 'Ukuran file maksimal 5MB.',
+        });
+        return;
+    }
+});
+
+    @if(session('success'))
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: '{{ session('success') }}',
+        confirmButtonColor: '#3085d6'
+    });
+    @endif
 </script>
 @endsection

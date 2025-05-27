@@ -71,10 +71,10 @@ class TindakLanjutController extends Controller
 
         if (auth()->user()->role == 'admin') {
         return redirect()->route('meeting.detail', ['id' => $request->id_rapat])
-            ->with('success', 'Tindak lanjut berhasil diperbarui.');
+            ->with('success', 'Tindak lanjut berhasil ditambahkan.');
     } else {
         return redirect()->route('user.rapat.detail', ['id' => $request->id_rapat])
-            ->with('success', 'Tindak lanjut berhasil diperbarui.');
+            ->with('success', 'Tindak lanjut berhasil ditambahkan.');
     }
     
     }
@@ -179,10 +179,10 @@ class TindakLanjutController extends Controller
 
     if (auth()->user()->role == 'admin') {
     return redirect()->route('meeting.detail', ['id' => $tindaklanjut->id_rapat])
-        ->with('success', 'Tindak lanjut berhasil diperbarui.');
+        ->with('success', 'Tindak lanjut berhasil dihapus.');
     } else {
     return redirect()->route('user.rapat.detail', ['id' => $tindaklanjut->id_rapat])
-        ->with('success', 'Tindak lanjut berhasil diperbarui.');
+        ->with('success', 'Tindak lanjut berhasil dihapus.');
 }
 
 }
