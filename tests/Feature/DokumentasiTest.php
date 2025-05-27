@@ -21,7 +21,7 @@ class DokumentasiTest extends TestCase
     $this->withoutMiddleware();
     }
 
-        public function test_user_can_create_dokumentasi()
+        public function test_user_bisa_buat_dokumentasi()
     {
         Storage::fake('public');
 
@@ -49,7 +49,33 @@ class DokumentasiTest extends TestCase
         Storage::disk('public')->assertExists($file->file_path);
     }
 
-    public function test_user_can_update_dokumentasi()
+    public function test_user_gagal_upload_dokumentasi_jika_format_tidak_sesuai()
+{
+    Storage::fake('public');
+
+    $user = User::factory()->create();
+    $rapat = Rapat::factory()->create();
+
+    $this->actingAs($user);
+
+    $response = $this->post(route('dokumentasi.store'), [
+        'id_rapat' => $rapat->id_rapat,
+        'judul_dokumentasi' => 'Dokumentasi dengan PDF',
+        'deskripsi' => 'File ini seharusnya gagal karena formatnya PDF',
+        'file_path' => [UploadedFile::fake()->create('file.pdf', 100, 'application/pdf')],
+    ]);
+
+    // Asumsinya kamu punya validasi mime di controller/Request, misal: image/jpeg, image/png
+    $response->assertSessionHasErrors(['file_path.0']);
+
+    // Pastikan tidak ada data masuk ke database
+    $this->assertDatabaseMissing('dokumentasis', [
+        'judul_dokumentasi' => 'Dokumentasi dengan PDF',
+    ]);
+}
+
+
+    public function test_user_bisa_edit_dokumentasi()
     {
         Storage::fake('public');
 
@@ -75,7 +101,7 @@ class DokumentasiTest extends TestCase
         ]);
     }
 
-    public function test_user_can_delete_dokumentasi()
+    public function test_user_bisa_hapus_dokumentasi()
     {
         $user = User::factory()->create();
         $this->actingAs($user);

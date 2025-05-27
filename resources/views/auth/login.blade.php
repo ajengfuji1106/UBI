@@ -19,6 +19,18 @@
                 <h2 class="fw-semibold">Login</h2>
                 <p class="text-muted mb-4">Login to access your account</p>
 
+                 <!-- Pesan Error Login -->
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+
                 <form action="{{ route('login') }}" method="POST">
                     @csrf
                     <div class="mb-3">

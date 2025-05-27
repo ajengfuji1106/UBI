@@ -38,6 +38,29 @@ class NotulensiTest extends TestCase
         $this->assertDatabaseHas('notulensis', ['judul_notulensi' => 'Judul Test Notulensi']);
     }
 
+        public function test_user_gabisa_membuat_notulensi_jika_ada_field_kosong()
+    {
+        $user = User::factory()->create();
+        $rapat = Rapat::factory()->create();
+        $this->actingAs($user);
+    
+        $data = [
+            'id_rapat' => $rapat->id_rapat,
+            'id_user' => $user->id,
+            'judul_notulensi' => '', // kosong
+            'konten_notulensi' => 'Isi konten notulensi',
+        ];
+    
+        $response = $this->post(route('notulensi.store'), $data);
+    
+        $response->assertSessionHasErrors(['judul_notulensi']);
+        $this->assertDatabaseMissing('notulensis', [
+            'id_rapat' => $rapat->id_rapat,
+            'id_user' => $user->id,
+        ]);
+    }
+
+
     public function test_user_bisa_update_notulensi()
     {
         $user = User::factory()->create();
@@ -64,6 +87,7 @@ class NotulensiTest extends TestCase
         $response->assertStatus(302);
         $this->assertDatabaseHas('notulensis', ['judul_notulensi' => 'Judul Baru']);
     }
+
 
     public function test_user_bisa_hapus_notulensi()
     {

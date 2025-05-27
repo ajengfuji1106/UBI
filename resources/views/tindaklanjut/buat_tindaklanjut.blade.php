@@ -89,7 +89,7 @@
                     <div id="dropArea" class="form-control p-4 text-center rounded" style="cursor: pointer;">
                         <input type="file" name="file_path" class="d-none" id="fileInput">
                         <p class="text-muted mb-1" id="uploadText">Drag and Drop here or</p>
-                        <p class="text-muted small" id="infoText">Allowed: PDF, DOCX, JPG (max 50MB)</p>
+                        <p class="text-muted small" id="infoText">Allowed: PDF, DOCX (max 50MB)</p>
                         <button type="button" onclick="document.getElementById('fileInput').click()" class="btn btn-outline-success btn-sm">Select file</button>
                     </div>
                 </div>

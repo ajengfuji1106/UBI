@@ -15,14 +15,15 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'Admin User',
-            'telephone' => '081234567890',
+            'name' => 'Admin',
+            'telephone' => '083111694569',
             'email' => 'admin@gmail.com',
-            'password' => Hash::make('password123'), // atau bcrypt('password123')
+            'password' => Hash::make('admin123'), 
             'foto' => 'default.jpg',
+            'role'=> 'admin',
         ]);
 
          // Tambahkan user lain jika diperlukan
-        User::factory()->count(5)->create(); // jika kamu punya UserFactory
+        User::factory()->count(5)->create(); 
     }
 }

@@ -42,11 +42,6 @@
                 </select>
             </div>
 
-            {{-- <div class="mb-3"> --}}
-                {{-- <label class="form-label">Kategori Rapat *</label> --}}
-                {{-- <input type="text" name="kategori_rapat" class="form-control" placeholder="Masukkan Kategori Rapat" required> --}}
-            {{-- </div> --}}
-
             <div class="mb-3">
                 <label class="form-label">Upload Undangan *</label>
                 <div id="dropArea" class="form-control p-4 text-center rounded" style="cursor: pointer;">
@@ -96,6 +91,36 @@
             }
         });
 
+        document.querySelector('form').addEventListener('submit', function (e) {
+        let judul = document.querySelector('[name="judul_rapat"]').value.trim();
+        let tanggal = document.querySelector('[name="tanggal_rapat"]').value.trim();
+        let waktu = document.querySelector('[name="waktu_rapat"]').value.trim();
+        let lokasi = document.querySelector('[name="lokasi_rapat"]').value.trim();
+        let kategori = document.querySelector('[name="kategori_rapat"]').value.trim();
+        let file = document.getElementById('fileInput').files[0];
+
+        if (!judul || !tanggal || !waktu || !lokasi || !kategori || !file) {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'warning',
+                title: 'Isi Semua Kolom!',
+                text: 'Semua inputan wajib diisi.',
+            });
+            return;
+        }
+
+        if (file.size > 5 * 1024 * 1024) { // lebih dari 5MB
+            e.preventDefault();
+            Swal.fire({
+                icon: 'error',
+                title: 'File Terlalu Besar!',
+                text: 'Ukuran file maksimal 5MB.',
+            });
+            return;
+        }
+        });
+
+
         fileInput.addEventListener("change", function () {
             if (fileInput.files.length) {
                 updateFileName(fileInput.files[0]);
@@ -107,5 +132,14 @@
             infoText.style.display = "none";
         }
     });
+
+    @if(session('success'))
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: '{{ session('success') }}',
+        confirmButtonColor: '#3085d6'
+    });
+    @endif
 </script>
 @endsection

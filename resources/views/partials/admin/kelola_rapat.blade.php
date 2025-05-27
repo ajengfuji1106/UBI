@@ -197,6 +197,16 @@
             url.searchParams.set('sort', sort);
             window.location.href = url.toString(); // reload halaman dengan query baru
         });
+
+        //opo tambah undangan
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                confirmButtonColor: '#3085d6'
+            });
+        @endif
     </script>
     
 @endsection
