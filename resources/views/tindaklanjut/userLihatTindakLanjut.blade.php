@@ -3,9 +3,6 @@
 @section('content')
 <div class="bg-white rounded-3 p-4" style="margin-left: 260px; margin-top: 65px; height: auto; ">
     <div class="card p-4 shadow-lg border-0">
-        {{-- <div> --}}
-            {{-- <a href="{{ route('tindaklanjut.downloadPdf', $tindaklanjut->id_TindakLanjut) }}" class="btn btn-primary">Download</a> --}}
-        {{-- </div> --}}
 
     <!-- Detail Tindak Lanjut -->
     <div class="card mb-4 bg-white shadow rounded-3 border-0">
@@ -107,7 +104,7 @@
                                                             Pada: {{ $revisi->created_at->timezone('Asia/Jakarta')->format('d M Y H:i') }}
                                                         </div>
                                                     @else
-                                                        <p class="text-muted">Belum ada catatan revisi.</p>
+                                                        <p class="text-muted">Tidak ada catatan revisi.</p>
                                                     @endif
                                                 </div>
                                                 <div class="modal-footer">

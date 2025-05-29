@@ -22,8 +22,6 @@ class UserSeeder extends Seeder
             'foto' => 'default.jpg',
             'role'=> 'admin',
         ]);
-
-         // Tambahkan user lain jika diperlukan
         User::factory()->count(5)->create(); 
     }
 }

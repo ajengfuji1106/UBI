@@ -20,7 +20,7 @@
                 <!-- Foto dan Nama -->
                 <div class="text-center"> 
                     <div class="position-relative d-inline-block" style="background: white; border-radius: 50%; padding: 20px;">
-                        <img src="{{ $user->foto ? asset('storage/' . $user->foto) : asset('images/default-profile.png') }}" 
+                        <img src="{{ $user->foto ? asset('storage/' . $user->foto) : asset('assets/avatar.png') }}" 
                             class="rounded-circle" style="width: 80px; height: 80px; object-fit: cover; background: white; padding: 5px;">
                         
                         <!-- Ikon Kamera -->

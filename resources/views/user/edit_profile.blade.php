@@ -14,7 +14,7 @@
                 </div>
 
                 <!-- Foto Profil -->
-                <img src="{{ $user->foto ? asset('storage/' . $user->foto) : asset('images/default-profile.png') }}"
+                <img src="{{ $user->foto ? asset('storage/' . $user->foto) : asset('assets/avatar.png') }}"
                      class="rounded-circle mb-3" style="width: 100px; height: 100px; object-fit: cover;">
 
                 <h2 class="h4 mb-1">{{ $user->name }}</h2>

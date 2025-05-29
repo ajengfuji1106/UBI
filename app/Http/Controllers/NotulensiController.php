@@ -21,32 +21,32 @@ class NotulensiController extends Controller
         return view('notulensi.buat_notulensi', compact('id_rapat', 'layout')); 
     }
 
-public function store(Request $request)
-{
-    // Validasi input tanpa `id_user`, `created_at`, dan `updated_at`
-    $validatedData = $request->validate([
-        'id_rapat' => 'required|exists:rapats,id_rapat', // Sesuaikan nama tabel & kolom
-        'judul_notulensi' => 'required|string|max:255',
-        'konten_notulensi' => 'required',
-    ]);
+    public function store(Request $request)
+    {
+        // Validasi input tanpa `id_user`, `created_at`, dan `updated_at`
+        $validatedData = $request->validate([
+            'id_rapat' => 'required|exists:rapats,id_rapat', // Sesuaikan nama tabel & kolom
+            'judul_notulensi' => 'required|string|max:255',
+            'konten_notulensi' => 'required',
+        ]);
 
-    // Simpan data ke database
-    Notulensi::create([
-        'id_rapat' => $request->id_rapat,
-        'id_user' => Auth::check() ? Auth::id() : 1, // Jika belum ada auth, gunakan ID default
-        'judul_notulensi' => $request->judul_notulensi,
-        'konten_notulensi' => $request->konten_notulensi,
-    ]);
+        // Simpan data ke database
+        Notulensi::create([
+            'id_rapat' => $request->id_rapat,
+            'id_user' => Auth::check() ? Auth::id() : 1, // Jika belum ada auth, gunakan ID default
+            'judul_notulensi' => $request->judul_notulensi,
+            'konten_notulensi' => $request->konten_notulensi,
+        ]);
 
         if (auth()->user()->role == 'admin') {
-        return redirect()->route('meeting.detail', ['id' => $request->id_rapat])
-            ->with('success', 'Notulensi berhasil ditambahkan.');
-    } else {
-        return redirect()->route('user.rapat.detail', ['id' => $request->id_rapat])
-            ->with('success', 'Notulensi berhasil ditambahkan.');
-    }
+            return redirect()->route('meeting.detail', ['id' => $request->id_rapat])
+                ->with('success', 'Notulensi berhasil ditambahkan.');
+        } else {
+            return redirect()->route('user.rapat.detail', ['id' => $request->id_rapat])
+                ->with('success', 'Notulensi berhasil ditambahkan.');
+        }
 
-}
+    }
 
 public function show($id_notulensi)
 {

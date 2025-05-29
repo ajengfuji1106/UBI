@@ -9,20 +9,6 @@
       <div class="card-body">
         <h5 class="card-title mb-4">Jadwal Rapat Mendatang</h5>
 
-        {{-- <div class="d-flex justify-content-between mb-3"> --}}
-          {{-- <div> --}}
-            {{-- <button class="btn btn-outline-secondary btn-sm">Filter</button> --}}
-          {{-- </div> --}}
-          {{-- <div class="d-flex"> --}}
-            {{-- <input type="text" class="form-control form-control-sm me-2" placeholder="Cari..."> --}}
-            {{-- <select class="form-select form-select-sm" style="width: auto;"> --}}
-              {{-- <option selected>Sort by</option> --}}
-              {{-- <option value="1">Tanggal</option> --}}
-              {{-- <option value="2">Status</option> --}}
-            {{-- </select> --}}
-          {{-- </div> --}}
-        {{-- </div> --}}
-
         <table class="table table-hover">
           <thead class="table-light">
             <tr>

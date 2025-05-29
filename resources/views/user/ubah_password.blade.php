@@ -12,7 +12,7 @@
             </a>
 
             <!-- Foto Profil -->
-            <img src="{{ $user->foto ? asset('storage/' . $user->foto) : asset('images/default-profile.png') }}"
+            <img src="{{ $user->foto ? asset('storage/' . $user->foto) : asset('assets/avatar.png') }}"
                  class="rounded-circle mb-3" style="width: 96px; height: 96px; object-fit: cover;">
 
             <h2 class="h5 fw-semibold mb-1">{{ $user->name }}</h2>

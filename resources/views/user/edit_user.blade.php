@@ -36,7 +36,7 @@
                     <div class="col-sm-9">
                         <div class="d-flex align-items-center mb-2">
                             <div class="rounded-circle overflow-hidden bg-light d-flex justify-content-center align-items-center" style="width: 64px; height: 64px;">
-                                <img id="previewImage" src="{{ $user->foto ? asset('storage/'.$user->foto) : asset('assets/addpict.png') }}" 
+                                <img id="previewImage" src="{{ $user->foto ? asset('storage/'.$user->foto) : asset('assets/avatar.png') }}" 
                                      class="img-fluid" style="max-height: 48px;" alt="Foto Profil">
                             </div>
                         </div>

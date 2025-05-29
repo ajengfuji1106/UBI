@@ -186,11 +186,6 @@
                             </div>
                         @endif
                     </div>
-
-                    {{-- <div class="mb-3"> --}}
-                        {{-- <button type="submit" name="status_kehadiran" value="hadir" class="btn btn-success me-2" id="btnHadir">Hadir</button> --}}
-                        {{-- <button type="submit" name="status_kehadiran" value="tidak_hadir" class="btn btn-danger" id="btnTidakHadir">Tidak Hadir</button> --}}
-                    {{-- </div> --}}
                 </form>
             </div>
         </div>

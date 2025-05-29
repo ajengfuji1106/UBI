@@ -12,6 +12,9 @@
                     <option value="">Semua</option>
                     <option value="Internal" {{ request('kategori_rapat') == 'Internal' ? 'selected' : '' }}>Internal</option>
                     <option value="Eksternal" {{ request('kategori_rapat') == 'Eksternal' ? 'selected' : '' }}>Eksternal</option>
+                    <option value="Perencanaan"{{ request('kategori_rapat') == 'Perencanaan' ? 'selected' : '' }}>Perencanaan</option>
+                    <option value="Progres" {{ request('kategori_rapat') == 'Progres' ? 'selected' : '' }}>Progres</option>
+                    <option value="Evaluasi" {{ request('kategori_rapat') == 'Evaluasi' ? 'selected' : '' }}>Evaluasi</option>
                 </select>
             </form>
 

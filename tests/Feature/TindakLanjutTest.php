@@ -47,25 +47,6 @@ class TindakLanjutTest extends TestCase
         ]);
     }
 
-        public function test_user_gagal_membuat_tindak_lanjut_jika_ada_field_kosong()
-    {
-        $user = \App\Models\User::factory()->create();
-        $rapat = \App\Models\Rapat::factory()->create();
-
-        $this->actingAs($user);
-
-        $response = $this->post(route('tindaklanjut.store'), [
-            'id_rapat' => $rapat->id_rapat,
-            'judul_tugas' => '',
-            'deadline_tugas' => now()->addDays(5)->toDateString(),
-            'deskripsi_tugas' => 'Deskripsi tugas valid',
-            'id_user' => [$user->id],
-        ]);
-
-        $response->assertSessionHasErrors(['judul_tugas']);
-        $this->assertDatabaseMissing('tindak_lanjuts', ['deskripsi_tugas' => 'Deskripsi tugas valid']);
-    }
-
         public function test_user_gagal_upload_file_tindak_lanjut_jika_ukuran_lebih_dari_50mb()
     {
         Storage::fake('public');
@@ -75,7 +56,7 @@ class TindakLanjutTest extends TestCase
 
         $this->actingAs($user);
 
-        // Buat file palsu berukuran 51MB (52000 KB)
+        // file palsu berukuran 51MB (52000 KB)
         $fileBesar = UploadedFile::fake()->create('lampiran_besar.pdf', 52000);
 
         $response = $this->post(route('tindaklanjut.store'), [

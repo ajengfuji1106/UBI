@@ -35,6 +35,9 @@
                 <select name="kategori_rapat" class="form-select">
                     <option value="Internal" {{ $undangan->rapat->kategori_rapat == 'Internal' ? 'selected' : '' }}>Internal</option>
                     <option value="Eksternal" {{ $undangan->rapat->kategori_rapat == 'Eksternal' ? 'selected' : '' }}>Eksternal</option>
+                    <option value="Perencanaan"{{ request('kategori_rapat') == 'Perencanaan' ? 'selected' : '' }}>Perencanaan</option>
+                    <option value="Progres" {{ request('kategori_rapat') == 'Progres' ? 'selected' : '' }}>Progres</option>
+                    <option value="Evaluasi" {{ request('kategori_rapat') == 'Evaluasi' ? 'selected' : '' }}>Evaluasi</option>
                 </select>
             </div>
 

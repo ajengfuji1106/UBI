@@ -11,17 +11,6 @@ use Illuminate\Http\Request;
 
 class PesertaController extends Controller
 {
-    // public function index($id_rapat)
-    // {
-        // $peserta = Peserta::where('id_rapat', $id_rapat)->get();
-        // $roles = ['Moderator', 'PIC Rapat', 'Anggota Rapat'];
-        // return view('peserta.index', compact('peserta', 'roles'));
-        // $peserta = Peserta::where('id_rapat', $id_rapat)->with('user')->get();
-        // $users = User::all(); // Ambil semua user untuk pilihan di modal
-        // $roles = ['Moderator', 'PIC Rapat', 'Anggota Rapat'];
-
-        // return view('peserta.index', compact('peserta', 'roles', 'users'));
-    // }
 // Menampilkan form tambah partisipan
 public function create($id_rapat)
 {

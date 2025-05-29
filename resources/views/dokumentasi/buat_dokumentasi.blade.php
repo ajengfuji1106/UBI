@@ -110,32 +110,5 @@
             }
         });
     });
-
-    // document.addEventListener("DOMContentLoaded", function () {
-        // const fileInput = document.getElementById('fileUpload');
-        // const fileNameText = document.getElementById('fileName');
-        // const previewImage = document.getElementById('previewImage');
-
-        // fileInput.addEventListener('change', function () {
-            // const file = fileInput.files[0];
-
-            // if (file) {
-                // fileNameText.textContent = file.name;
-
-                // if (file.type.startsWith('image/')) {
-                    // const reader = new FileReader();
-                    // reader.onload = function (e) {
-                        // previewImage.src = e.target.result;
-                        // previewImage.style.opacity = "1";
-                    // };
-                    // reader.readAsDataURL(file);
-                // }
-            // } else {
-                // fileNameText.textContent = 'No File Chosen';
-                // previewImage.src = "{{ asset('assets/Placeholder Image.png') }}";
-                // previewImage.style.opacity = "0.5";
-            // }
-        // });
-    // });
 </script>
 @endsection

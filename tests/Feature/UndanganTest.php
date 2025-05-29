@@ -89,7 +89,7 @@ class UndanganTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        // Buat file palsu berukuran 6000 KB (lebih dari 5MB = 5120 KB)
+        // file palsu berukuran 6000 KB (lebih dari 5MB = 5120 KB)
         $fileTerlaluBesar = UploadedFile::fake()->create('file_besar.pdf', 6000);
 
         $response = $this->post(route('undangan.store'), [

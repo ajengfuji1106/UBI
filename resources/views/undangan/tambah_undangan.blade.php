@@ -33,6 +33,9 @@
                 <select name="kategori_rapat" class="form-select" required>
                     <option value="Internal">Internal</option>
                     <option value="Eksternal">Eksternal</option>
+                    <option value="Perencanaan">Perencanaan</option>
+                    <option value="Progres">Progres</option>
+                    <option value="Evaluasi">Evaluasi</option>
                 </select>
             </div>
 
